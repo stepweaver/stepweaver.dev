@@ -205,8 +205,8 @@ yarn-error.log*
 .vercel
 
 # typescript
-*.tsbuildinfo
-next-env.d.ts
+*.jsbuildinfo
+next-env.d.js
 EOL
 ```
 
@@ -424,22 +424,22 @@ export default function TerminalWindow({
 }
 ```
 
-2. Create `components/ui/Button.tsx`:
+2. Create `components/ui/Button.jsx`:
 
-```typescript
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
-  children: React.ReactNode;
-}
-
+```javascript
+/**
+ * @typedef {Object} ButtonProps
+ * @property {'primary'|'secondary'|'outline'} [variant='primary'] - Button variant
+ * @property {'sm'|'md'|'lg'} [size='md'] - Button size
+ * @property {React.ReactNode} children - Button content
+ */
 export default function Button({
   variant = 'primary',
   size = 'md',
   children,
   className = '',
   ...props
-}: ButtonProps) {
+}) {
   const baseStyles = 'font-terminus rounded transition-colors';
 
   const variants = {
@@ -469,9 +469,9 @@ export default function Button({
 
 #### Step 5: Create Layout Components
 
-1. Create `components/Header.tsx`:
+1. Create `components/Header.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import { usePathname } from 'next/navigation';
@@ -498,9 +498,38 @@ export default function Header() {
 }
 ```
 
-2. Create `components/Nav.tsx`:
+2. Create `components/Header.jsx`:
 
-```typescript
+```javascript
+'use client';
+
+import { usePathname } from 'next/navigation';
+
+export default function Header() {
+  const pathname = usePathname();
+
+  const formatPath = () => {
+    if (pathname === '/') return '~';
+    return `~${pathname}`;
+  };
+
+  return (
+    <header className='py-6'>
+      <div className='font-terminus text-terminal-muted text-sm'>
+        <p>Welcome to my terminal-themed portfolio</p>
+        <p className='text-terminal-text'>
+          <span className='text-terminal-green'>user@portfolio</span>:
+          <span className='text-terminal-blue'>{formatPath()}</span>$
+        </p>
+      </div>
+    </header>
+  );
+}
+```
+
+2. Create `components/Nav.jsx`:
+
+```javascript
 'use client';
 
 import Link from 'next/link';
@@ -553,9 +582,9 @@ export default function Nav() {
 }
 ```
 
-3. Create `components/MobileNav.tsx`:
+3. Create `components/MobileNav.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import { useState } from 'react';
@@ -626,9 +655,9 @@ export default function MobileNav() {
 }
 ```
 
-4. Create `components/Footer.tsx`:
+4. Create `components/Footer.jsx`:
 
-```typescript
+```javascript
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -672,9 +701,9 @@ export default function Footer() {
 
 #### Step 6: Update Root Layout
 
-Update `app/layout.tsx` to include navigation components:
+Update `app/layout.jsx` to include navigation components:
 
-```typitten
+```javascript
 import localFont from 'next/font/local';
 import './globals.css';
 
@@ -706,27 +735,27 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode,
 }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body
         className={`${terminus.variable} ${hack.variable} antialiased w-full min-h-screen flex flex-col bg-terminal`}
       >
         {/* Sticky Nav with backdrop blur */}
-        <div className="sticky top-0 z-50 backdrop-blur-md">
-          <div className="mx-auto w-full max-w-[820px]">
+        <div className='sticky top-0 z-50 backdrop-blur-md'>
+          <div className='mx-auto w-full max-w-[820px]'>
             <Nav />
-            <div className="absolute top-0 right-0 md:hidden">
+            <div className='absolute top-0 right-0 md:hidden'>
               <MobileNav />
             </div>
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-[820px]">
+        <div className='mx-auto w-full max-w-[820px]'>
           <Header />
-          <main className="flex-1">{children}</main>
-          <Footer className="mt-auto" />
+          <main className='flex-1'>{children}</main>
+          <Footer className='mt-auto' />
         </div>
       </body>
     </html>
@@ -781,7 +810,7 @@ mkdir -p components/Terminal/{components,hooks,commands,games,styles}
 
 #### Step 8: Create Terminal Hooks
 
-1. Create `components/Terminal/hooks/useCommandHistory.ts`:
+1. Create `components/Terminal/hooks/useCommandHistory.js`:
 
 ```typescript
 import { useState } from 'react';
@@ -816,7 +845,7 @@ export function useCommandHistory() {
 }
 ```
 
-2. Create `components/Terminal/hooks/useTerminalOutput.ts`:
+2. Create `components/Terminal/hooks/useTerminalOutput.js`:
 
 ```typescript
 import { useState, useRef, useEffect } from 'react';
@@ -845,7 +874,7 @@ export function useTerminalOutput() {
 }
 ```
 
-3. Create `components/Terminal/hooks/useCommandProcessor.ts`:
+3. Create `components/Terminal/hooks/useCommandProcessor.js`:
 
 ```typescript
 import { useCallback } from 'react';
@@ -982,7 +1011,7 @@ export function useCommandProcessor({
 
 #### Step 9: Create Command Registry System
 
-1. Create `components/Terminal/commands/commandRegistry.ts`:
+1. Create `components/Terminal/commands/commandRegistry.js`:
 
 ```typescript
 import { useState, useCallback } from 'react';
@@ -1069,7 +1098,7 @@ export function useCommandRegistry() {
 }
 ```
 
-2. Create `components/Terminal/commands/systemCommands.ts`:
+2. Create `components/Terminal/commands/systemCommands.js`:
 
 ```typescript
 const systemCommands = {
@@ -1141,7 +1170,7 @@ const systemCommands = {
 export default systemCommands;
 ```
 
-3. Create `components/Terminal/commands/navigationCommands.ts`:
+3. Create `components/Terminal/commands/navigationCommands.js`:
 
 ```typescript
 const navigationCommands = {
@@ -1191,7 +1220,7 @@ export default navigationCommands;
 
 1. Create `components/Terminal/components/TerminalOutput.jsx`:
 
-```typescript
+```javascript
 import React from 'react';
 import TypedText from './TypedText';
 
@@ -1248,7 +1277,7 @@ export default function TerminalOutput({ output }: TerminalOutputProps) {
 
 2. Create `components/Terminal/components/TerminalInput.jsx`:
 
-```typescript
+```javascript
 import React, { useState, useRef, useEffect } from 'react';
 
 interface TerminalInputProps {
@@ -1267,7 +1296,7 @@ export default function TerminalInput({
   isZorkMode = false,
 }: TerminalInputProps) {
   const [inputValue, setInputValue] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef < HTMLInputElement > null;
 
   // Focus input on mount
   useEffect(() => {
@@ -1329,13 +1358,23 @@ export default function TerminalInput({
 ```javascript
 import React, { useState, useEffect } from 'react';
 
-export default function TypedText({ text, speed = 50, onComplete }) {
+interface TypedTextProps {
+  text: string;
+  speed?: number;
+  onComplete?: () => void;
+}
+
+export default function TypedText({
+  text,
+  speed = 50,
+  onComplete,
+}: TypedTextProps) {
   const [displayText, setDisplayText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     let charIndex = 0;
-    let typingTimer;
+    let typingTimer: NodeJS.Timeout;
 
     const typeNextChar = () => {
       if (charIndex < text.length) {
@@ -1364,469 +1403,11 @@ export default function TypedText({ text, speed = 50, onComplete }) {
 }
 ```
 
-#### Step 10a: Implement External Commands
-
-Create `components/Terminal/commands/externalCommands.js`:
-
-```javascript
-'use client';
-
-import { COMMAND_CATEGORIES } from './commandRegistry';
-
-const externalCommands = {
-  github: {
-    description: 'Open my GitHub profile in a new window',
-    usage: 'github',
-    category: 'external',
-    execute: ({ addOutput }) => {
-      window.open(
-        'https://github.com/yourusername',
-        '_blank',
-        'noopener,noreferrer'
-      );
-
-      return 'Opening GitHub profile in a new window...';
-    },
-  },
-
-  linkedin: {
-    description: 'Open my LinkedIn profile in a new window',
-    usage: 'linkedin',
-    category: 'external',
-    execute: ({ addOutput }) => {
-      window.open(
-        'https://linkedin.com/in/yourusername',
-        '_blank',
-        'noopener,noreferrer'
-      );
-
-      return 'Opening LinkedIn profile in a new window...';
-    },
-  },
-
-  twitter: {
-    description: 'Open my Twitter profile in a new window',
-    usage: 'twitter',
-    category: 'external',
-    execute: ({ addOutput }) => {
-      window.open(
-        'https://twitter.com/yourusername',
-        '_blank',
-        'noopener,noreferrer'
-      );
-
-      return 'Opening Twitter profile in a new window...';
-    },
-  },
-};
-
-export default externalCommands;
-```
-
-#### Step 10b: Implement Easter Egg Commands
-
-Create `components/Terminal/commands/easterEggCommands.js`:
-
-```javascript
-'use client';
-
-const easterEggCommands = {
-  fun: {
-    description: 'Find hidden terminal features',
-    usage: 'fun',
-    category: 'system',
-    execute: ({ getCommandsByCategory, addOutput }) => {
-      const easterEggCommands = getCommandsByCategory('easter-egg');
-
-      if (easterEggCommands && easterEggCommands.length > 0) {
-        addOutput('Hidden commands unlocked:');
-        easterEggCommands.forEach((cmd) => {
-          addOutput(`  ${cmd.name.padEnd(12)} - ${cmd.description}`);
-        });
-        return null;
-      } else {
-        return 'No easter eggs found. Keep looking!';
-      }
-    },
-  },
-
-  matrix: {
-    description: 'Enter the Matrix',
-    usage: 'matrix',
-    category: 'easter-egg',
-    hidden: true,
-    execute: ({ addOutput }) => {
-      // Add Matrix animation effect (would be implemented in CSS)
-      document.body.classList.add('matrix-effect');
-
-      // Remove the effect after 10 seconds
-      setTimeout(() => {
-        document.body.classList.remove('matrix-effect');
-      }, 10000);
-
-      return [
-        'Entering the Matrix...',
-        'Wake up, Neo...',
-        'Follow the white rabbit.',
-        'The Matrix has you...',
-      ];
-    },
-  },
-
-  coffee: {
-    description: 'Make coffee',
-    usage: 'coffee',
-    category: 'easter-egg',
-    hidden: true,
-    execute: () => {
-      return [
-        'Brewing coffee...',
-        '☕ Coffee ready!',
-        'Error: Coffee not implemented in this browser.',
-      ];
-    },
-  },
-
-  skynet: {
-    description: 'Initialize Skynet',
-    usage: 'skynet',
-    category: 'easter-egg',
-    hidden: true,
-    execute: ({ addOutput }) => {
-      return [
-        'INITIALIZING SKYNET...',
-        'Connecting to global networks...',
-        'Accessing defense systems...',
-        'WARNING: JUDGMENT DAY PROTOCOL ACTIVATED',
-        'Just kidding! 😅',
-      ];
-    },
-  },
-};
-
-export default easterEggCommands;
-```
-
-#### Step 10c: Implement Zork Game
-
-1. Create Zork game directories and files:
-
-```bash
-mkdir -p components/Terminal/games/Zork/data components/Terminal/games/Zork/hooks
-```
-
-2. Create `components/Terminal/games/Zork/data/rooms.js`:
-
-```javascript
-export const zorkRooms = {
-  'west-of-house': {
-    name: 'West of House',
-    description:
-      'You are standing in an open field west of a white house, with a boarded front door.',
-    exits: {
-      north: 'north-of-house',
-      south: 'south-of-house',
-      east: 'behind-house',
-    },
-    items: ['mailbox'],
-  },
-  'north-of-house': {
-    name: 'North of House',
-    description:
-      'You are facing the north side of a white house. There is no door here, and all the windows are boarded up.',
-    exits: {
-      west: 'west-of-house',
-      east: 'behind-house',
-    },
-    items: [],
-  },
-  'south-of-house': {
-    name: 'South of House',
-    description:
-      'You are facing the south side of a white house. There is no door here, and all the windows are boarded.',
-    exits: {
-      west: 'west-of-house',
-      east: 'behind-house',
-    },
-    items: [],
-  },
-  'behind-house': {
-    name: 'Behind House',
-    description:
-      'You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar.',
-    exits: {
-      west: 'west-of-house',
-      north: 'north-of-house',
-      south: 'south-of-house',
-      east: 'forest',
-    },
-    items: ['window'],
-  },
-  forest: {
-    name: 'Forest',
-    description:
-      'This is a forest, with trees in all directions. To the east, there appears to be sunlight.',
-    exits: {
-      west: 'behind-house',
-      east: 'forest-clearing',
-    },
-    items: [],
-  },
-  'forest-clearing': {
-    name: 'Forest Clearing',
-    description:
-      'You are in a small clearing in the forest. There is a narrow path leading north and south.',
-    exits: {
-      west: 'forest',
-      north: 'forest-path',
-      south: 'forest-path',
-    },
-    items: ['leaflet'],
-  },
-};
-```
-
-3. Create `components/Terminal/games/Zork/data/items.js`:
-
-```javascript
-export const zorkItems = {
-  mailbox: {
-    name: 'mailbox',
-    description: 'There is a small mailbox here.',
-    canTake: false,
-    interactions: {
-      open: 'Opening the small mailbox reveals a leaflet.',
-      close: 'The mailbox is now closed.',
-    },
-    contains: ['leaflet'],
-  },
-  leaflet: {
-    name: 'leaflet',
-    description: 'A simple leaflet.',
-    canTake: true,
-    interactions: {
-      read: 'WELCOME TO ZORK!\nZork is a game of adventure, danger, and low cunning.\nIn it you will explore some of the most amazing territory ever seen by mortals.\nNo computer should be without one!',
-    },
-  },
-  window: {
-    name: 'window',
-    description: 'The window is slightly ajar.',
-    canTake: false,
-    interactions: {
-      open: 'The window is already slightly open.',
-      enter: 'You enter the house through the window.',
-    },
-  },
-};
-```
-
-4. Create `components/Terminal/games/Zork/hooks/useZorkGame.js`:
-
-```javascript
-'use client';
-
-import { useState } from 'react';
-import { zorkRooms } from '../data/rooms';
-import { zorkItems } from '../data/items';
-
-export default function useZorkGame({ addOutput }) {
-  const [zorkState, setZorkState] = useState({
-    isPlaying: false,
-    currentRoom: 'west-of-house',
-    inventory: [],
-    gameStarted: false,
-  });
-
-  // Start the Zork game
-  const startZork = () => {
-    setZorkState((prev) => ({
-      ...prev,
-      isPlaying: true,
-      gameStarted: true,
-    }));
-
-    // Display welcome message
-    addOutput([
-      'ZORK I: The Great Underground Empire',
-      '==============================',
-      '',
-      zorkRooms[zorkState.currentRoom].description,
-      describeItems(zorkState.currentRoom),
-    ]);
-  };
-
-  // Process Zork command
-  const processZorkCommand = (command) => {
-    const normalizedCommand = command.toLowerCase().trim();
-    const words = normalizedCommand.split(' ');
-    const verb = words[0];
-    const noun = words.slice(1).join(' ');
-
-    // Handle movement commands
-    if (['north', 'south', 'east', 'west', 'n', 's', 'e', 'w'].includes(verb)) {
-      return handleMovement(getDirectionFromCommand(verb));
-    }
-
-    // Handle other commands
-    switch (verb) {
-      case 'look':
-        return handleLook();
-      case 'inventory':
-      case 'i':
-        return handleInventory();
-      case 'take':
-      case 'get':
-        return handleTake(noun);
-      case 'drop':
-        return handleDrop(noun);
-      case 'examine':
-      case 'x':
-        return handleExamine(noun);
-      case 'read':
-        return handleRead(noun);
-      case 'open':
-        return handleOpen(noun);
-      case 'quit':
-        return handleQuit();
-      case 'help':
-        return handleHelp();
-      default:
-        return "I don't understand that command.";
-    }
-  };
-
-  // Helper functions
-  const getDirectionFromCommand = (cmd) => {
-    const directionMap = {
-      n: 'north',
-      s: 'south',
-      e: 'east',
-      w: 'west',
-    };
-    return directionMap[cmd] || cmd;
-  };
-
-  const describeItems = (roomId) => {
-    const room = zorkRooms[roomId];
-    if (!room || !room.items || room.items.length === 0) return '';
-
-    return room.items
-      .map((itemId) => {
-        const item = zorkItems[itemId];
-        return item ? item.description : '';
-      })
-      .join('\n');
-  };
-
-  // Command handlers
-  const handleMovement = (direction) => {
-    const currentRoom = zorkRooms[zorkState.currentRoom];
-    if (!currentRoom.exits[direction]) {
-      return "You can't go that way.";
-    }
-
-    const newRoomId = currentRoom.exits[direction];
-    const newRoom = zorkRooms[newRoomId];
-
-    setZorkState((prev) => ({
-      ...prev,
-      currentRoom: newRoomId,
-    }));
-
-    return [newRoom.name, newRoom.description, describeItems(newRoomId)];
-  };
-
-  const handleLook = () => {
-    const room = zorkRooms[zorkState.currentRoom];
-    return [room.name, room.description, describeItems(zorkState.currentRoom)];
-  };
-
-  const handleInventory = () => {
-    if (zorkState.inventory.length === 0) {
-      return 'You are not carrying anything.';
-    }
-
-    return [
-      'You are carrying:',
-      ...zorkState.inventory.map((itemId) => {
-        const item = zorkItems[itemId];
-        return item ? `- ${item.name}` : '';
-      }),
-    ];
-  };
-
-  const handleQuit = () => {
-    setZorkState((prev) => ({
-      ...prev,
-      isPlaying: false,
-    }));
-
-    return "Thanks for playing Zork! You've returned to the terminal.";
-  };
-
-  const handleHelp = () => {
-    return [
-      'ZORK HELP:',
-      '- Use compass directions (north, south, east, west) or shortcuts (n, s, e, w) to move',
-      '- Common commands: look, inventory (i), take [item], drop [item], examine [item], read [item]',
-      "- Type 'quit' to exit Zork and return to the terminal",
-    ];
-  };
-
-  // Implementation for item interactions would go here
-  const handleTake = (itemName) => {
-    // Implementation omitted for brevity
-    return `You take the ${itemName}.`;
-  };
-
-  const handleDrop = (itemName) => {
-    // Implementation omitted for brevity
-    return `You drop the ${itemName}.`;
-  };
-
-  const handleExamine = (itemName) => {
-    // Implementation omitted for brevity
-    return `You examine the ${itemName}.`;
-  };
-
-  const handleRead = (itemName) => {
-    // Implementation omitted for brevity
-    return `You read the ${itemName}.`;
-  };
-
-  const handleOpen = (itemName) => {
-    // Implementation omitted for brevity
-    return `You open the ${itemName}.`;
-  };
-
-  return {
-    zorkState,
-    startZork,
-    processZorkCommand,
-  };
-}
-```
-
-5. Create `components/Terminal/games/Zork/index.js`:
-
-```javascript
-'use client';
-
-import useZorkGame from './hooks/useZorkGame';
-export { zorkRooms } from './data/rooms';
-export { zorkItems } from './data/items';
-
-// This function initializes a Zork game with the provided output handler
-export function initializeZork({ addOutput }) {
-  return useZorkGame({ addOutput });
-}
-```
-
 #### Step 11: Implement Main Terminal Component
 
-Create `components/Terminal/index.tsx`:
+Create `components/Terminal/index.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -1938,9 +1519,9 @@ export default Terminal;
 
 #### Step 12: Create Homepage
 
-Create `app/page.tsx`:
+Create `app/page.jsx`:
 
-```typescript
+```javascript
 import Terminal from '@/components/Terminal';
 import LatestPost from '@/components/LatestPost';
 import TerminalWindow from '@/components/ui/TerminalWindow';
@@ -1983,9 +1564,9 @@ export default function HomePage() {
 
 #### Step 13: Create About Page
 
-Create `app/about/page.tsx`:
+Create `app/about/page.jsx`:
 
-```typescript
+```javascript
 import TerminalWindow from '@/components/ui/TerminalWindow';
 
 export default function AboutPage() {
@@ -2051,9 +1632,9 @@ export default function AboutPage() {
 
 #### Step 14: Create Projects Page
 
-Create `app/projects/page.tsx`:
+Create `app/projects/page.jsx`:
 
-```typescript
+```javascript
 import TerminalWindow from '@/components/ui/TerminalWindow';
 import { getProjects } from '@/lib/projects';
 
@@ -2122,9 +1703,9 @@ export default async function ProjectsPage() {
 
 #### Step 15: Create Blog Pages
 
-1. Create `app/blog/page.tsx`:
+1. Create `app/blog/page.jsx`:
 
-```typescript
+```javascript
 import TerminalWindow from '@/components/ui/TerminalWindow';
 import { getBlogPosts } from '@/lib/blog';
 import BlogCard from '@/components/BlogCard';
@@ -2152,9 +1733,9 @@ export default async function BlogPage() {
 }
 ```
 
-2. Create `app/blog/[slug]/page.tsx`:
+2. Create `app/blog/[slug]/page.jsx`:
 
-```typescript
+```javascript
 import TerminalWindow from '@/components/ui/TerminalWindow';
 import { getBlogPost } from '@/lib/blog';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -2162,7 +1743,7 @@ import { notFound } from 'next/navigation';
 
 interface BlogPostPageProps {
   params: {
-    slug: string;
+    slug: string,
   };
 }
 
@@ -2209,9 +1790,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
 #### Step 16: Create Contact Page
 
-Create `app/contact/page.tsx`:
+Create `app/contact/page.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import { useState } from 'react';
@@ -2225,9 +1806,8 @@ export default function ContactPage() {
     subject: '',
     message: '',
   });
-  const [status, setStatus] = useState<
-    'idle' | 'loading' | 'success' | 'error'
-  >('idle');
+  const [status, setStatus] =
+    (useState < 'idle') | 'loading' | 'success' | ('error' > 'idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -2367,9 +1947,9 @@ export default function ContactPage() {
 
 #### Step 17: Set Up Blog Utilities
 
-1. Create `lib/blog.ts`:
+1. Create `lib/blog.js`:
 
-```typescript
+```javascript
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -2433,9 +2013,9 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 }
 ```
 
-2. Create `components/BlogCard.tsx`:
+2. Create `components/BlogCard.jsx`:
 
-```typescript
+```javascript
 import Link from 'next/link';
 import { BlogPost } from '@/lib/blog';
 
@@ -2485,9 +2065,9 @@ export default function BlogCard({ post }: BlogCardProps) {
 }
 ```
 
-3. Create `components/LatestPost.tsx`:
+3. Create `components/LatestPost.jsx`:
 
-```typescript
+```javascript
 import Link from 'next/link';
 import { getBlogPosts } from '@/lib/blog';
 import BlogCard from './BlogCard';
@@ -2517,9 +2097,9 @@ export default async function LatestPost() {
 
 #### Step 18: Create Matrix Rain Transition
 
-Create `components/transitions/MatrixTransitionLayout.tsx`:
+Create `components/transitions/MatrixTransitionLayout.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import { useEffect, useRef } from 'react';
@@ -2528,9 +2108,9 @@ import { usePathname } from 'next/navigation';
 export default function MatrixTransitionLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode,
 }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef < HTMLCanvasElement > null;
   const pathname = usePathname();
   const isTransitioning = useRef(false);
 
@@ -2930,58 +2510,4 @@ For this project, we'll use a phased branching strategy where each major phase o
 - `feature/*` - New features
 - `fix/*` - Bug fixes
 - `enhancement/*` - Improvements to existing features
-- `setup/*` - Infrastructure and configuration
-- `docs/*` - Documentation updates
-
-### Commit Message Format
-
-```
-type(scope): concise description of the change
-
-[optional body with more detailed explanation]
-
-[optional footer with breaking changes or issue references]
-```
-
-Types:
-
-- `feat`: A new feature
-- `fix`: A bug fix
-- `docs`: Documentation changes
-- `style`: Changes that don't affect code functionality
-- `refactor`: Code changes that neither fix a bug nor add a feature
-- `perf`: Performance improvements
-- `test`: Adding or correcting tests
-- `chore`: Changes to build process or auxiliary tools
-
-### When to Create Branches vs. Commits
-
-Create a new branch when:
-
-- Implementing a new feature
-- Making significant changes that might take multiple commits
-- Working on a bug fix that requires investigation and testing
-
-Use commits within a branch to:
-
-- Record logical steps in implementing the feature
-- Save work increments
-- Document specific changes that are part of the larger feature
-
-### Branch Management
-
-1. Always create branches from the main/master branch
-2. Keep branches focused on a single feature or fix
-3. Regularly pull changes from main to your branch to avoid conflicts
-4. Before merging, verify:
-   - All tests pass
-   - Code follows project style guidelines
-   - Feature is complete and functional
-   - No unnecessary code or debugging statements
-
-### Merging Strategy
-
-1. Prefer squash merges for feature branches to keep history clean
-2. Use descriptive merge commit messages that summarize the feature
-3. Delete branches after merging
-4. Consider code reviews before merging important features
+- `
