@@ -9,10 +9,10 @@ module.exports = {
     extend: {
       colors: {
         terminal: {
-          DEFAULT: '#0D1117',
-          light: '#1A2233',
-          border: '#30363D',
-          green: '#00FF00',
+          DEFAULT: '#0D1A15',
+          light: '#14231C',
+          border: '#2D3E35',
+          green: '#00FF41',
           yellow: '#FFFF00',
           red: '#F97583',
           blue: '#79B8FF',
