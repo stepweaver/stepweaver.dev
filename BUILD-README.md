@@ -156,6 +156,8 @@ portfolio-blog/
 
 ### Phase 1: Project Setup & Environment Configuration
 
+> **Branch Management**: Create branch `feature/phase1-setup` before beginning this phase.
+
 #### Step 1: Initialize Project Structure
 
 1. Create necessary directories:
@@ -393,6 +395,8 @@ export default function RootLayout({
 ```
 
 ### Phase 2: Layout & Theme Foundation
+
+> **Branch Management**: Create branch `feature/phase2-layout` after merging Phase 1 branch.
 
 #### Step 4: Create UI Components
 
@@ -730,9 +734,9 @@ export default function RootLayout({
 }
 ```
 
-### Phase 3: Terminal Component
+### Phase 3: Navigation System
 
-The terminal component is the centerpiece of your application. Let's implement it using a modular approach.
+> **Branch Management**: Create branch `feature/phase3-navigation` after merging Phase 2 branch.
 
 #### Step 7: Create Terminal Component Structure
 
@@ -1482,6 +1486,8 @@ export default Terminal;
 
 ### Phase 4: Page Implementation
 
+> **Branch Management**: Create branch `feature/phase5-pages` after merging Phase 4 branch.
+
 #### Step 12: Create Homepage
 
 Create `app/page.tsx`:
@@ -1909,6 +1915,8 @@ export default function ContactPage() {
 
 ### Phase 5: Blog System
 
+> **Branch Management**: Create branch `feature/phase6-blog` after merging Phase 5 branch.
+
 #### Step 17: Set Up Blog Utilities
 
 1. Create `lib/blog.ts`:
@@ -2057,6 +2065,8 @@ export default async function LatestPost() {
 
 ### Phase 6: Interactive Features
 
+> **Branch Management**: Create branch `feature/phase7-interactive` after merging Phase 6 branch.
+
 #### Step 18: Create Matrix Rain Transition
 
 Create `components/transitions/MatrixTransitionLayout.tsx`:
@@ -2164,6 +2174,8 @@ export default function MatrixTransitionLayout({
 ```
 
 ### Phase 7: Performance Optimization
+
+> **Branch Management**: Create branch `feature/phase8-optimization` after merging Phase 7 branch.
 
 #### Step 19: Enable Turbopack (Stable in Next.js 15)
 
@@ -2440,6 +2452,30 @@ vercel
    - Monitor server logs
 
 ## Git Workflow
+
+### Branch Creation Strategy
+
+For this project, we'll use a phased branching strategy where each major phase of development gets its own branch. This helps organize the work and makes it easier to track progress.
+
+#### When to Create Branches
+
+1. **Initial Setup**: Start with the `main` branch
+2. **For Each Phase**: Create a new feature branch at the beginning of each phase
+3. **For Complex Features**: If a phase has complex features, consider creating sub-branches
+4. **After Completing a Phase**: Merge back to `main` before starting the next phase
+
+#### Branch Creation Timeline
+
+| Phase   | Branch Name                   | When to Create        | When to Merge                      |
+| ------- | ----------------------------- | --------------------- | ---------------------------------- |
+| Phase 1 | `feature/phase1-setup`        | At project start      | After completing all Phase 1 steps |
+| Phase 2 | `feature/phase2-layout`       | After merging Phase 1 | After completing all Phase 2 steps |
+| Phase 3 | `feature/phase3-navigation`   | After merging Phase 2 | After completing all Phase 3 steps |
+| Phase 4 | `feature/phase4-terminal`     | After merging Phase 3 | After completing all Phase 4 steps |
+| Phase 5 | `feature/phase5-pages`        | After merging Phase 4 | After completing all Phase 5 steps |
+| Phase 6 | `feature/phase6-blog`         | After merging Phase 5 | After completing all Phase 6 steps |
+| Phase 7 | `feature/phase7-interactive`  | After merging Phase 6 | After completing all Phase 7 steps |
+| Phase 8 | `feature/phase8-optimization` | After merging Phase 7 | After all testing is complete      |
 
 ### Branch Naming Conventions
 
