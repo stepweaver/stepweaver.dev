@@ -5,8 +5,8 @@ export default function Footer() {
     <footer className='py-6 mt-10 border-t border-terminal-border text-terminal-muted font-terminus text-sm'>
       <div className='flex flex-col md:flex-row justify-between items-center'>
         <div className='font-terminus text-base text-gray-400'>
-          <span className='text-accent-green'>$</span> echo &quot;© {year}{' '}
-          λstepweaver.dev&quot;
+          <span className='text-terminal-green'>$</span>{' '}
+          <span>echo &quot;© {year} λstepweaver.dev&quot;</span>
         </div>
         <div className='flex space-x-4 mt-4 md:mt-0'>
           <a
