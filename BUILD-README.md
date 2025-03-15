@@ -377,11 +377,7 @@ export const metadata = {
   description: 'Personal portfolio and blog with a terminal theme',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode,
-}) {
+export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body
@@ -424,22 +420,16 @@ export default function TerminalWindow({
 }
 ```
 
-2. Create `components/ui/Button.tsx`:
+2. Create `components/ui/Button.jsx`:
 
-```typescript
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
-  children: React.ReactNode;
-}
-
+```javascript
 export default function Button({
   variant = 'primary',
   size = 'md',
   children,
   className = '',
   ...props
-}: ButtonProps) {
+}) {
   const baseStyles = 'font-terminus rounded transition-colors';
 
   const variants = {
@@ -469,9 +459,9 @@ export default function Button({
 
 #### Step 5: Create Layout Components
 
-1. Create `components/Header.tsx`:
+1. Create `components/Header.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import { usePathname } from 'next/navigation';
@@ -498,9 +488,9 @@ export default function Header() {
 }
 ```
 
-2. Create `components/Nav.tsx`:
+2. Create `components/Nav.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import Link from 'next/link';
@@ -553,9 +543,9 @@ export default function Nav() {
 }
 ```
 
-3. Create `components/MobileNav.tsx`:
+3. Create `components/MobileNav.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import { useState } from 'react';
@@ -626,9 +616,9 @@ export default function MobileNav() {
 }
 ```
 
-4. Create `components/Footer.tsx`:
+4. Create `components/Footer.jsx`:
 
-```typescript
+```javascript
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -672,9 +662,9 @@ export default function Footer() {
 
 #### Step 6: Update Root Layout
 
-Update `app/layout.tsx` to include navigation components:
+Update `app/layout.jsx` to include navigation components:
 
-```typitten
+```javascript
 import localFont from 'next/font/local';
 import './globals.css';
 
@@ -703,30 +693,26 @@ export const metadata = {
   description: 'Personal portfolio and blog with a terminal theme',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body
         className={`${terminus.variable} ${hack.variable} antialiased w-full min-h-screen flex flex-col bg-terminal`}
       >
         {/* Sticky Nav with backdrop blur */}
-        <div className="sticky top-0 z-50 backdrop-blur-md">
-          <div className="mx-auto w-full max-w-[820px]">
+        <div className='sticky top-0 z-50 backdrop-blur-md'>
+          <div className='mx-auto w-full max-w-[820px]'>
             <Nav />
-            <div className="absolute top-0 right-0 md:hidden">
+            <div className='absolute top-0 right-0 md:hidden'>
               <MobileNav />
             </div>
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-[820px]">
+        <div className='mx-auto w-full max-w-[820px]'>
           <Header />
-          <main className="flex-1">{children}</main>
-          <Footer className="mt-auto" />
+          <main className='flex-1'>{children}</main>
+          <Footer className='mt-auto' />
         </div>
       </body>
     </html>
@@ -781,23 +767,23 @@ mkdir -p components/Terminal/{components,hooks,commands,games,styles}
 
 #### Step 8: Create Terminal Hooks
 
-1. Create `components/Terminal/hooks/useCommandHistory.ts`:
+1. Create `components/Terminal/hooks/useCommandHistory.js`:
 
-```typescript
+```javascript
 import { useState } from 'react';
 
 export function useCommandHistory() {
-  const [history, setHistory] = useState<string[]>([]);
+  const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
 
-  const addToHistory = (command: string) => {
+  const addToHistory = (command) => {
     if (command.trim()) {
       setHistory((prev) => [...prev, command]);
       setHistoryIndex(-1);
     }
   };
 
-  const navigateHistory = (direction: 'up' | 'down'): string | null => {
+  const navigateHistory = (direction) => {
     if (history.length === 0) return null;
 
     let newIndex;
@@ -816,16 +802,16 @@ export function useCommandHistory() {
 }
 ```
 
-2. Create `components/Terminal/hooks/useTerminalOutput.ts`:
+2. Create `components/Terminal/hooks/useTerminalOutput.js`:
 
-```typescript
+```javascript
 import { useState, useRef, useEffect } from 'react';
 
 export function useTerminalOutput() {
-  const [output, setOutput] = useState<(string | string[])[]>([]);
-  const terminalRef = useRef<HTMLDivElement>(null);
+  const [output, setOutput] = useState([]);
+  const terminalRef = useRef(null);
 
-  const addOutput = (newOutput: string | string[]) => {
+  const addOutput = (newOutput) => {
     const outputItem = Array.isArray(newOutput) ? newOutput : [newOutput];
 
     setOutput((prevOutput) => [...prevOutput, ...outputItem]);
@@ -845,42 +831,11 @@ export function useTerminalOutput() {
 }
 ```
 
-3. Create `components/Terminal/hooks/useCommandProcessor.ts`:
+3. Create `components/Terminal/hooks/useCommandProcessor.js`:
 
-```typescript
+```javascript
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-
-interface CommandProcessorProps {
-  addOutput: (output: string | string[]) => void;
-  clearOutput: () => void;
-  getCommand: (name: string) => Command | null;
-  getCommandsByCategory: (category: string) => Command[];
-  getAllVisibleCommands: () => Command[];
-  isZorkMode?: boolean;
-  startZork?: () => void;
-  processZorkCommand?: (command: string) => void;
-}
-
-interface Command {
-  name: string;
-  description: string;
-  usage: string;
-  category: string;
-  hidden?: boolean;
-  execute: (context: CommandContext) => string | string[] | null;
-}
-
-interface CommandContext {
-  args: string[];
-  input: string;
-  addOutput: (output: string | string[]) => void;
-  clearOutput: () => void;
-  router: ReturnType<typeof useRouter>;
-  getCommand: (name: string) => Command | null;
-  getCommandsByCategory: (category: string) => Command[];
-  getAllVisibleCommands: () => Command[];
-}
 
 export function useCommandProcessor({
   addOutput,
@@ -891,11 +846,11 @@ export function useCommandProcessor({
   isZorkMode = false,
   startZork = null,
   processZorkCommand = null,
-}: CommandProcessorProps) {
+}) {
   const router = useRouter();
 
   const processCommand = useCallback(
-    (input: string) => {
+    (input) => {
       // Skip empty commands
       if (!input || !input.trim()) {
         addOutput(['', '$ ']);
@@ -982,56 +937,33 @@ export function useCommandProcessor({
 
 #### Step 9: Create Command Registry System
 
-1. Create `components/Terminal/commands/commandRegistry.ts`:
+1. Create `components/Terminal/commands/commandRegistry.js`:
 
-```typescript
+```javascript
 import { useState, useCallback } from 'react';
 
-interface Command {
-  name: string;
-  description: string;
-  usage: string;
-  category: string;
-  hidden?: boolean;
-  execute: (context: CommandContext) => string | string[] | null;
-}
-
-interface CommandContext {
-  args: string[];
-  input: string;
-  addOutput: (output: string | string[]) => void;
-  clearOutput: () => void;
-  router: any;
-  getCommand: (name: string) => Command | null;
-  getCommandsByCategory: (category: string) => Command[];
-  getAllVisibleCommands: () => Command[];
-}
-
 export function useCommandRegistry() {
-  const [commands, setCommands] = useState<Record<string, Command>>({});
+  const [commands, setCommands] = useState({});
 
-  const registerCommand = useCallback(
-    (name: string, options: Omit<Command, 'name'>) => {
-      if (!name) return;
+  const registerCommand = useCallback((name, options) => {
+    if (!name) return;
 
-      setCommands((prev) => ({
-        ...prev,
-        [name]: {
-          name,
-          description: options.description || 'No description available',
-          usage: options.usage || name,
-          category: options.category || 'misc',
-          hidden: options.hidden || false,
-          execute:
-            options.execute || (() => `Command '${name}' is not implemented`),
-        },
-      }));
-    },
-    []
-  );
+    setCommands((prev) => ({
+      ...prev,
+      [name]: {
+        name,
+        description: options.description || 'No description available',
+        usage: options.usage || name,
+        category: options.category || 'misc',
+        hidden: options.hidden || false,
+        execute:
+          options.execute || (() => `Command '${name}' is not implemented`),
+      },
+    }));
+  }, []);
 
   const registerCommands = useCallback(
-    (commandsObj: Record<string, Omit<Command, 'name'>>) => {
+    (commandsObj) => {
       Object.entries(commandsObj).forEach(([name, options]) => {
         registerCommand(name, options);
       });
@@ -1040,14 +972,14 @@ export function useCommandRegistry() {
   );
 
   const getCommand = useCallback(
-    (name: string) => {
+    (name) => {
       return commands[name] || null;
     },
     [commands]
   );
 
   const getCommandsByCategory = useCallback(
-    (category: string) => {
+    (category) => {
       return Object.values(commands).filter(
         (cmd) => cmd.category === category && !cmd.hidden
       );
@@ -1069,9 +1001,9 @@ export function useCommandRegistry() {
 }
 ```
 
-2. Create `components/Terminal/commands/systemCommands.ts`:
+2. Create `components/Terminal/commands/systemCommands.js`:
 
-```typescript
+```javascript
 const systemCommands = {
   help: {
     description: 'Display help information about available commands',
@@ -1141,9 +1073,9 @@ const systemCommands = {
 export default systemCommands;
 ```
 
-3. Create `components/Terminal/commands/navigationCommands.ts`:
+3. Create `components/Terminal/commands/navigationCommands.js`:
 
-```typescript
+```javascript
 const navigationCommands = {
   ls: {
     description: 'List available sections',
@@ -1189,17 +1121,13 @@ export default navigationCommands;
 
 #### Step 10: Create Terminal UI Components
 
-1. Create `components/Terminal/components/TerminalOutput.tsx`:
+1. Create `components/Terminal/components/TerminalOutput.jsx`:
 
-```typescript
+```javascript
 import React from 'react';
 import TypedText from './TypedText';
 
-interface TerminalOutputProps {
-  output: (string | string[])[];
-}
-
-export default function TerminalOutput({ output }: TerminalOutputProps) {
+export default function TerminalOutput({ output }) {
   return (
     <div className='terminal-output font-mono text-sm mb-2'>
       {output.map((line, index) => {
@@ -1246,18 +1174,10 @@ export default function TerminalOutput({ output }: TerminalOutputProps) {
 }
 ```
 
-2. Create `components/Terminal/components/TerminalInput.tsx`:
+2. Create `components/Terminal/components/TerminalInput.jsx`:
 
-```typescript
+```javascript
 import React, { useState, useRef, useEffect } from 'react';
-
-interface TerminalInputProps {
-  onSubmit: (command: string) => void;
-  history?: string[];
-  historyIndex?: number;
-  onHistoryNavigation?: (direction: 'up' | 'down') => string | null;
-  isZorkMode?: boolean;
-}
 
 export default function TerminalInput({
   onSubmit,
@@ -1265,9 +1185,9 @@ export default function TerminalInput({
   historyIndex = -1,
   onHistoryNavigation,
   isZorkMode = false,
-}: TerminalInputProps) {
+}) {
   const [inputValue, setInputValue] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef(null);
 
   // Focus input on mount
   useEffect(() => {
@@ -1276,7 +1196,7 @@ export default function TerminalInput({
     }
   }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e) => {
     // Handle up/down arrows for history navigation
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
@@ -1324,28 +1244,18 @@ export default function TerminalInput({
 }
 ```
 
-3. Create `components/Terminal/components/TypedText.tsx`:
+3. Create `components/Terminal/components/TypedText.jsx`:
 
-```typescript
+```javascript
 import React, { useState, useEffect } from 'react';
 
-interface TypedTextProps {
-  text: string;
-  speed?: number;
-  onComplete?: () => void;
-}
-
-export default function TypedText({
-  text,
-  speed = 50,
-  onComplete,
-}: TypedTextProps) {
+export default function TypedText({ text, speed = 50, onComplete }) {
   const [displayText, setDisplayText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     let charIndex = 0;
-    let typingTimer: NodeJS.Timeout;
+    let typingTimer;
 
     const typeNextChar = () => {
       if (charIndex < text.length) {
@@ -1376,9 +1286,9 @@ export default function TypedText({
 
 #### Step 11: Implement Main Terminal Component
 
-Create `components/Terminal/index.tsx`:
+Create `components/Terminal/index.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -1448,7 +1358,7 @@ const Terminal = () => {
   };
 
   // Handle command submission
-  const handleCommandSubmit = (command: string) => {
+  const handleCommandSubmit = (command) => {
     addToHistory(command);
     processCommand(command);
   };
@@ -1490,9 +1400,9 @@ export default Terminal;
 
 #### Step 12: Create Homepage
 
-Create `app/page.tsx`:
+Create `app/page.jsx`:
 
-```typescript
+```javascript
 import Terminal from '@/components/Terminal';
 import LatestPost from '@/components/LatestPost';
 import TerminalWindow from '@/components/ui/TerminalWindow';
@@ -1535,9 +1445,9 @@ export default function HomePage() {
 
 #### Step 13: Create About Page
 
-Create `app/about/page.tsx`:
+Create `app/about/page.jsx`:
 
-```typescript
+```javascript
 import TerminalWindow from '@/components/ui/TerminalWindow';
 
 export default function AboutPage() {
@@ -1563,7 +1473,6 @@ export default function AboutPage() {
               <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
                 {[
                   'JavaScript',
-                  'TypeScript',
                   'React',
                   'Next.js',
                   'Node.js',
@@ -1603,9 +1512,9 @@ export default function AboutPage() {
 
 #### Step 14: Create Projects Page
 
-Create `app/projects/page.tsx`:
+Create `app/projects/page.jsx`:
 
-```typescript
+```javascript
 import TerminalWindow from '@/components/ui/TerminalWindow';
 import { getProjects } from '@/lib/projects';
 
@@ -1674,9 +1583,9 @@ export default async function ProjectsPage() {
 
 #### Step 15: Create Blog Pages
 
-1. Create `app/blog/page.tsx`:
+1. Create `app/blog/page.jsx`:
 
-```typescript
+```javascript
 import TerminalWindow from '@/components/ui/TerminalWindow';
 import { getBlogPosts } from '@/lib/blog';
 import BlogCard from '@/components/BlogCard';
@@ -1704,9 +1613,9 @@ export default async function BlogPage() {
 }
 ```
 
-2. Create `app/blog/[slug]/page.tsx`:
+2. Create `app/blog/[slug]/page.jsx`:
 
-```typescript
+```javascript
 import TerminalWindow from '@/components/ui/TerminalWindow';
 import { getBlogPost } from '@/lib/blog';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -1714,7 +1623,7 @@ import { notFound } from 'next/navigation';
 
 interface BlogPostPageProps {
   params: {
-    slug: string;
+    slug: string,
   };
 }
 
@@ -1761,9 +1670,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
 #### Step 16: Create Contact Page
 
-Create `app/contact/page.tsx`:
+Create `app/contact/page.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import { useState } from 'react';
@@ -1777,11 +1686,9 @@ export default function ContactPage() {
     subject: '',
     message: '',
   });
-  const [status, setStatus] = useState<
-    'idle' | 'loading' | 'success' | 'error'
-  >('idle');
+  const [status, setStatus] = useState('idle');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('loading');
 
@@ -1919,25 +1826,16 @@ export default function ContactPage() {
 
 #### Step 17: Set Up Blog Utilities
 
-1. Create `lib/blog.ts`:
+1. Create `lib/blog.js`:
 
-```typescript
+```javascript
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
 const BLOG_DIR = path.join(process.cwd(), 'content/blog');
 
-export interface BlogPost {
-  slug: string;
-  title: string;
-  date: string;
-  tags?: string[];
-  content: string;
-  excerpt?: string;
-}
-
-export async function getBlogPosts(): Promise<BlogPost[]> {
+export async function getBlogPosts() {
   const files = fs.readdirSync(BLOG_DIR);
 
   const posts = await Promise.all(
@@ -1965,7 +1863,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   );
 }
 
-export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+export async function getBlogPost(slug) {
   try {
     const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
     const source = fs.readFileSync(filePath, 'utf8');
@@ -1985,17 +1883,12 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 }
 ```
 
-2. Create `components/BlogCard.tsx`:
+2. Create `components/BlogCard.jsx`:
 
-```typescript
+```javascript
 import Link from 'next/link';
-import { BlogPost } from '@/lib/blog';
 
-interface BlogCardProps {
-  post: BlogPost;
-}
-
-export default function BlogCard({ post }: BlogCardProps) {
+export default function BlogCard({ post }) {
   return (
     <article className='p-4 bg-terminal-light rounded-lg hover:bg-terminal-light/80 transition-colors'>
       <Link href={`/blog/${post.slug}`}>
@@ -2037,9 +1930,9 @@ export default function BlogCard({ post }: BlogCardProps) {
 }
 ```
 
-3. Create `components/LatestPost.tsx`:
+3. Create `components/LatestPost.jsx`:
 
-```typescript
+```javascript
 import Link from 'next/link';
 import { getBlogPosts } from '@/lib/blog';
 import BlogCard from './BlogCard';
@@ -2069,9 +1962,9 @@ export default async function LatestPost() {
 
 #### Step 18: Create Matrix Rain Transition
 
-Create `components/transitions/MatrixTransitionLayout.tsx`:
+Create `components/transitions/MatrixTransitionLayout.jsx`:
 
-```typescript
+```javascript
 'use client';
 
 import { useEffect, useRef } from 'react';
@@ -2080,9 +1973,9 @@ import { usePathname } from 'next/navigation';
 export default function MatrixTransitionLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode,
 }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef < HTMLCanvasElement > null;
   const pathname = usePathname();
   const isTransitioning = useRef(false);
 
