@@ -21,7 +21,7 @@ export default function Nav() {
           <Link
             key={item.path}
             href={item.path}
-            className={`flex items-center ${
+            className={`flex items-center text-lg ${
               pathname === item.path
                 ? 'text-terminal-green'
                 : 'text-terminal-text hover:text-terminal-green'

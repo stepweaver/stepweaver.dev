@@ -125,6 +125,6 @@
 
   /* Sticky navigation styles */
   .sticky-nav {
-    @apply sticky top-0 z-50 border-b border-terminal-muted/20;
+    @apply sticky top-0 z-50;
   }
 }
