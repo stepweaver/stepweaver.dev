@@ -20,12 +20,9 @@ const DebugTerminal = () => {
 
 export default function HomePage() {
   return (
-    <div className='space-y-8'>
+    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8'>
       {/* Hero Section */}
-      <section>
-        <div className='mb-4 p-2 bg-terminal-light rounded'>
-          Using full Terminal component
-        </div>
+      <section className='w-full'>
         <Terminal />
       </section>
 

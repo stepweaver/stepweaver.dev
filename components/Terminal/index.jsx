@@ -25,6 +25,25 @@ const Terminal = () => {
   const commandRegistry = useCommandRegistry();
   const terminalContainerRef = useRef(null);
   const previousPathRef = useRef(pathname);
+  const [dimensions, setDimensions] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0,
+  });
+
+  // Detect window resize for responsiveness
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Reset terminal when path changes
   useEffect(() => {
@@ -99,12 +118,22 @@ const Terminal = () => {
     processCommand(command);
   };
 
+  // Get path display name with reasonable length based on screen size
+  const getPathDisplay = () => {
+    if (pathname === '/') return '';
+
+    // On smaller screens, show shorter path
+    if (dimensions.width < 640 && pathname.length > 10) {
+      return '/..' + pathname.substring(pathname.length - 8);
+    }
+
+    return pathname;
+  };
+
   return (
     <div className='terminal-container' ref={terminalContainerRef}>
       <div className='terminal-header'>
-        <div className='terminal-title'>
-          user@portfolio:~{pathname !== '/' ? pathname : ''}
-        </div>
+        <div className='terminal-title'>user@portfolio:~{getPathDisplay()}</div>
         <div className='terminal-buttons'>
           <div className='terminal-button bg-terminal-red'></div>
           <div className='terminal-button bg-terminal-yellow'></div>
@@ -113,7 +142,7 @@ const Terminal = () => {
       </div>
       <div
         ref={terminalRef}
-        className='terminal-body font-terminus text-base overflow-y-auto max-h-[400px] p-4'
+        className='terminal-body font-terminus text-base p-4'
         onClick={handleTerminalClick}
       >
         <TerminalOutput output={output} />

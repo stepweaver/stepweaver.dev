@@ -17,6 +17,23 @@ export default function TerminalInput({
     }
   }, []);
 
+  // Handle mobile-friendly focus
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      // When tab becomes visible again, focus the input
+      if (document.visibilityState === 'visible' && inputRef.current) {
+        // Small delay to ensure DOM is ready
+        setTimeout(() => {
+          inputRef.current.focus();
+        }, 100);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
   const handleKeyDown = (e) => {
     // Handle up/down arrows for history navigation
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
@@ -33,6 +50,12 @@ export default function TerminalInput({
     if (e.key === 'Enter') {
       e.preventDefault();
       handleSubmit();
+    }
+
+    // Handle Tab key for autocomplete (to be implemented)
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      // Future autocomplete functionality can be added here
     }
   };
 
@@ -57,6 +80,9 @@ export default function TerminalInput({
         className='terminal-input bg-transparent border-none outline-none text-terminal-text w-full'
         aria-label='Terminal input'
         autoComplete='off'
+        autoCapitalize='off'
+        autoCorrect='off'
+        spellCheck='false'
         autoFocus
       />
       <span className='cursor-blink h-4 w-2 bg-terminal-green'></span>
