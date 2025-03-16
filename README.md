@@ -34,3 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Development Notes
+
+### Profile Image
+
+To display your profile picture on the site, add your image to the `public/images` directory as `profile.jpg`. The recommended size is 200x200 pixels for optimal display.
+
+The profile image will appear in the header of every page, next to your name and role. The role displayed will change depending on which page the user is viewing.
+
+If no profile image is found, your initials "SW" will be displayed as a fallback.

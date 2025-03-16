@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Nav from '@/components/Nav';
 import MobileNav from '@/components/MobileNav';
 import Footer from '@/components/Footer';
+import CrtEffect from '@/components/CrtEffect';
 
 const terminus = localFont({
   src: './fonts/TerminusTTFWindows-4.49.3.ttf',
@@ -22,30 +23,43 @@ const hack = localFont({
 });
 
 export const metadata = {
-  title: 'λ Your Name - Web Developer',
-  description: 'Personal portfolio and blog with a terminal theme',
+  title: {
+    template: '%s | Stephen Weaver',
+    default: 'Stephen Weaver | Web Developer',
+  },
+  description:
+    'Terminal-inspired portfolio of Stephen Weaver, a web developer and business analyst at the University of Notre Dame',
+  icons: {
+    icon: { url: '/icons/favicon.svg', type: 'image/svg+xml' },
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body
-        className={`${terminus.variable} ${hack.variable} antialiased w-full min-h-screen flex flex-col bg-terminal`}
+        className={`${terminus.variable} ${hack.variable} antialiased w-full min-h-screen flex flex-col bg-terminal crt-effect`}
       >
-        {/* Sticky Nav with backdrop blur */}
-        <div className='sticky top-0 z-50 backdrop-blur-md'>
-          <div className='mx-auto w-full max-w-[820px]'>
-            <Nav />
-            <div className='absolute top-0 right-0 md:hidden'>
-              <MobileNav />
-            </div>
-          </div>
-        </div>
+        {/* CRT effect overlay */}
+        <CrtEffect />
 
-        <div className='mx-auto w-full max-w-[820px]'>
+        <div className='mx-auto w-full max-w-4xl px-4 md:px-6 flex flex-col min-h-screen'>
+          {/* Header with profile and title */}
           <Header />
-          <main className='flex-1'>{children}</main>
-          <Footer className='mt-auto' />
+
+          {/* Navigation - sticky */}
+          <Nav />
+
+          {/* Mobile navigation */}
+          <div className='absolute top-4 right-4 md:hidden'>
+            <MobileNav />
+          </div>
+
+          {/* Main content - takes available space */}
+          <main className='flex-1 w-full pb-8'>{children}</main>
+
+          {/* Footer */}
+          <Footer className='py-6 border-t border-terminal-muted/20' />
         </div>
       </body>
     </html>

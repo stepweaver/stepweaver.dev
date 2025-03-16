@@ -2,7 +2,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className='py-6 mt-10 border-t border-terminal-border text-terminal-muted font-terminus text-sm'>
+    <footer className='py-6 border-t border-terminal-border text-terminal-muted font-terminus text-sm'>
       <div className='flex flex-col md:flex-row justify-between items-center'>
         <div className='font-terminus text-base text-gray-400'>
           <span className='text-terminal-green'>$</span>{' '}

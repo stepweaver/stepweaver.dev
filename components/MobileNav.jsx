@@ -17,7 +17,7 @@ export default function MobileNav() {
   ];
 
   return (
-    <div className='md:hidden'>
+    <div className='md:hidden z-50'>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className='p-2 text-terminal-green'
@@ -28,9 +28,11 @@ export default function MobileNav() {
       </button>
 
       {isOpen && (
-        <div className='absolute top-14 right-4 w-48 terminal-window z-50'>
+        <div className='fixed top-14 right-4 w-48 terminal-window z-50'>
           <div className='terminal-header'>
-            <div className='terminal-title'>~/menu</div>
+            <div className='terminal-title font-mono text-terminal-green'>
+              ~/menu
+            </div>
             <div className='terminal-buttons'>
               <div
                 className='terminal-button bg-terminal-red'
@@ -54,7 +56,9 @@ export default function MobileNav() {
                         : 'text-terminal-text'
                     }
                   >
-                    <span className='text-terminal-green mr-2'>&gt;</span>
+                    <span className='text-terminal-green mr-2'>
+                      {pathname === item.path ? '>' : ''}
+                    </span>
                     {item.name}
                   </Link>
                 </li>

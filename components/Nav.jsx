@@ -15,35 +15,22 @@ export default function Nav() {
   ];
 
   return (
-    <nav className='py-4'>
-      <div className='flex justify-between items-center'>
-        <Link href='/' className='group'>
-          <h1 className='text-2xl font-terminus text-terminal-green'>
-            <span className='font-hack mr-1 group-hover:animate-pulse inline-block'>
-              λ
-            </span>
-            <span>stepweaver</span>
-            <span className='cursor-blink'>_</span>
-          </h1>
-        </Link>
-
-        <ul className='hidden md:flex space-x-6 font-terminus'>
-          {navItems.map((item) => (
-            <li key={item.path}>
-              <Link
-                href={item.path}
-                className={`inline-flex items-center ${
-                  pathname === item.path
-                    ? 'text-terminal-green'
-                    : 'text-terminal-text hover:text-terminal-green'
-                }`}
-              >
-                <span className='text-terminal-green mr-1'>&gt;</span>
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+    <nav className='sticky-nav py-2 mb-8 font-terminus bg-terminal-background'>
+      <div className='flex items-center justify-center space-x-8'>
+        {navItems.map((item) => (
+          <Link
+            key={item.path}
+            href={item.path}
+            className={`flex items-center ${
+              pathname === item.path
+                ? 'text-terminal-green'
+                : 'text-terminal-text hover:text-terminal-green'
+            }`}
+          >
+            <span className='mr-1'>{pathname === item.path ? '>' : ''}</span>
+            {item.name}
+          </Link>
+        ))}
       </div>
     </nav>
   );

@@ -1,51 +1,17 @@
-.terminal-container {
-  @apply relative bg-terminal rounded-md overflow-hidden w-full;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5),
-    0 10px 10px -5px rgba(0, 0, 0, 0.4);
-}
+/* Terminal-specific styles that don't conflict with globals.css */
 
-.terminal-header {
-  @apply flex items-center justify-between px-4 py-2 bg-terminal-light border-b border-terminal-border;
-}
-
-.terminal-title {
-  @apply text-terminal-text font-terminus text-sm truncate;
-}
-
-.terminal-buttons {
-  @apply flex gap-2 shrink-0;
-}
-
-.terminal-button {
-  @apply w-3 h-3 rounded-full;
-}
-
+/* Additional terminal body styles beyond globals.css */
 .terminal-body {
-  @apply font-mono overflow-y-auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  @apply font-mono w-full;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.terminal-body::-webkit-scrollbar {
-  width: 6px;
-}
-
-.terminal-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.terminal-body::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
-}
-
+/* Terminal output and input styles */
 .terminal-output {
-  @apply font-mono text-sm mb-2;
+  @apply font-mono text-sm mb-2 w-full;
 }
 
 .terminal-input-line {
-  @apply flex items-center;
+  @apply flex items-center w-full;
 }
 
 .terminal-prompt {
@@ -66,23 +32,4 @@
 .terminal-input:focus {
   @apply outline-none;
   color-scheme: dark;
-}
-
-/* Responsive adjustments */
-@media (max-width: 640px) {
-  .terminal-body {
-    max-height: 300px;
-  }
-}
-
-@media (min-width: 641px) {
-  .terminal-body {
-    max-height: 400px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .terminal-body {
-    max-height: 500px;
-  }
 }

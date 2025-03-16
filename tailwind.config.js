@@ -34,6 +34,8 @@ module.exports = {
         'cursor-blink': 'cursor-blink 1s step-end infinite',
         'matrix-rain': 'matrix-rain 10s linear infinite',
         'text-typing': 'text-typing 3.5s steps(40, end)',
+        'crt-flicker': 'crt-flicker 4s infinite ease-in-out',
+        'crt-scan': 'crt-scan 8s linear infinite',
       },
       keyframes: {
         'cursor-blink': {
@@ -48,6 +50,27 @@ module.exports = {
           from: { width: '0' },
           to: { width: '100%' },
         },
+        'crt-flicker': {
+          '0%': { opacity: 0.98 },
+          '2%': { opacity: 0.9 },
+          '4%': { opacity: 0.98 },
+          '30%': { opacity: 1 },
+          '70%': { opacity: 0.98 },
+          '72%': { opacity: 0.93 },
+          '74%': { opacity: 0.98 },
+          '100%': { opacity: 0.98 },
+        },
+        'crt-scan': {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(100vh)' },
+        },
+      },
+      textShadow: {
+        crt: '0 0 5px rgba(0, 255, 65, 0.5)',
+      },
+      boxShadow: {
+        'crt-glow': '0 0 10px rgba(0, 255, 65, 0.2)',
+        'crt-inner': 'inset 0 0 150px rgba(0, 255, 65, 0.1)',
       },
     },
   },

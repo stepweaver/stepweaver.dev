@@ -14,23 +14,29 @@ export const externalCommands = {
     },
   },
 
-  linkedin: {
-    description: 'Open my LinkedIn profile',
-    usage: 'linkedin',
+  bluesky: {
+    description: 'Open my Bluesky profile',
+    usage: 'bluesky',
     category: 'external',
     execute: ({ router }) => {
-      window.open('https://linkedin.com/in/yourusername', '_blank');
-      return 'Opening LinkedIn profile...';
+      window.open(
+        'https://bsky.app/profile/yourusername.bsky.social',
+        '_blank'
+      );
+      return 'Opening Bluesky profile...';
     },
   },
 
   email: {
-    description: 'Send me an email',
+    description: 'Contact me through the contact form',
     usage: 'email',
     category: 'external',
-    execute: ({ router }) => {
-      window.open('mailto:your.email@example.com', '_blank');
-      return 'Opening email client...';
+    execute: ({ router, addOutput }) => {
+      addOutput('Navigating to contact page...');
+      setTimeout(() => {
+        router.push('/contact');
+      }, 500);
+      return null;
     },
   },
 

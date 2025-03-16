@@ -109,12 +109,8 @@ const Terminal = () => {
     ) {
       welcomeMessageDisplayedRef.current = true;
 
-      // Display welcome message
-      addOutput([
-        'Welcome to my terminal-themed portfolio!',
-        'Type "help" to see available commands.',
-        '',
-      ]);
+      // Display a simple prompt instead of the welcome message
+      addOutput(['Type "help" for a list of available commands.', '']);
     }
   }, [isCommandsRegistered, addOutput, output.length]);
 
@@ -157,16 +153,20 @@ const Terminal = () => {
 
     // On smaller screens, show shorter path
     if (dimensions.width < 640 && pathname.length > 10) {
-      return '/..' + pathname.substring(pathname.length - 8);
+      return `/${pathname.substring(pathname.length - 8)}`;
     }
 
-    return pathname;
+    return `/${pathname.substring(1)}`;
   };
 
   return (
-    <div className='terminal-container' ref={terminalContainerRef}>
+    <div className='terminal-window w-full' ref={terminalContainerRef}>
       <div className='terminal-header'>
-        <div className='terminal-title'>user@portfolio:~{getPathDisplay()}</div>
+        <div className='terminal-title'>
+          <span className='font-hack text-terminal-green'>λ</span>
+          <span className='text-terminal-green'>stepweaver</span>
+          {getPathDisplay()}
+        </div>
         <div className='terminal-buttons'>
           <div className='terminal-button bg-terminal-red'></div>
           <div className='terminal-button bg-terminal-yellow'></div>
