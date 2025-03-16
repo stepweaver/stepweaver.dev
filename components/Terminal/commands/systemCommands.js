@@ -10,10 +10,10 @@ export const systemCommands = {
 
         if (command) {
           return [
-            `Command: ${command.name}`,
+            `Command:     ${command.name}`,
             `Description: ${command.description}`,
-            `Usage: ${command.usage}`,
-            `Category: ${command.category}`,
+            `Usage:       ${command.usage}`,
+            `Category:    ${command.category}`,
           ];
         } else {
           return `Command '${commandName}' not found. Type 'help' to see available commands.`;
@@ -29,15 +29,25 @@ export const systemCommands = {
         commandsByCategory[cmd.category].push(cmd);
       });
 
-      // Format output
-      const output = ['Available commands:'];
+      // Format output with minimalist style
+      const output = [];
 
-      Object.entries(commandsByCategory).forEach(([category, commands]) => {
-        output.push(`\n${category.toUpperCase()}:`);
-        commands.forEach((cmd) => {
-          output.push(`  ${cmd.name.padEnd(12)} - ${cmd.description}`);
-        });
-      });
+      Object.entries(commandsByCategory).forEach(
+        ([category, commands], index) => {
+          // Add extra spacing between categories
+          if (index > 0) {
+            output.push('');
+          }
+
+          // Add category as a simple header with square brackets
+          output.push(`[${category.toUpperCase()}]`);
+
+          // List commands with minimal formatting
+          commands.forEach((cmd) => {
+            output.push(`  ${cmd.name.padEnd(12)} - ${cmd.description}`);
+          });
+        }
+      );
 
       return output;
     },
@@ -86,11 +96,11 @@ export const systemCommands = {
     category: 'system',
     execute: () => {
       return [
-        'Available sections:',
-        'about/      - Learn more about me',
-        'projects/   - View my portfolio projects',
-        'blog/       - Read my latest articles',
-        'contact/    - Get in touch with me',
+        '[SECTIONS]',
+        '  about/        - Learn more about me',
+        '  projects/     - View my portfolio projects',
+        '  blog/         - Read my latest articles',
+        '  contact/      - Get in touch with me',
       ];
     },
   },

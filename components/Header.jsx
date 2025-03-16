@@ -61,18 +61,21 @@ export default function Header() {
         </p>
       </div>
 
-      {/* Profile section with larger photo */}
-      <div className='flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-12 mt-4'>
-        <div className='flex-grow'>
+      {/* Content with side-by-side layout */}
+      <div className='flex flex-col md:flex-row md:items-center md:justify-center gap-8 my-8'>
+        {/* Text content on the left */}
+        <div className='order-2 md:order-1 text-center md:text-left'>
           <h1 className='text-4xl text-terminal-text font-terminus'>
             Stephen Weaver
           </h1>
-          <h2 className='text-xl text-terminal-muted font-terminus mt-1'>
+          <h2 className='text-xl text-terminal-muted font-terminus mt-2'>
             {getSubtitle()}
           </h2>
         </div>
-        <div className='flex-shrink-0'>
-          <div className='w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-2 border-terminal-green bg-terminal-light flex items-center justify-center'>
+
+        {/* Profile image on the right */}
+        <div className='order-1 md:order-2 flex justify-center'>
+          <div className='w-48 h-48 rounded-full overflow-hidden border-2 border-terminal-green bg-terminal flex items-center justify-center'>
             {imageError ? (
               <div className='text-terminal-green text-5xl'>SW</div>
             ) : (
