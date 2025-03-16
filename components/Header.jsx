@@ -84,7 +84,7 @@ export default function Header() {
                 alt='Stephen Weaver'
                 width={300}
                 height={300}
-                className='object-cover w-full h-full'
+                className='object-cover w-full h-full transform scale-x-[-1]'
                 onError={() => setImageError(true)}
               />
             )}
