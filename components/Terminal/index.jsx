@@ -21,10 +21,13 @@ const Terminal = () => {
   const { output, addOutput, clearOutput, terminalRef } = useTerminalOutput();
   const { history, historyIndex, addToHistory, navigateHistory } =
     useCommandHistory();
-  const [isInitialized, setIsInitialized] = useState(false);
+  // Use refs instead of state for initialization tracking
+  const isInitializedRef = useRef(false);
+  const [isCommandsRegistered, setIsCommandsRegistered] = useState(false);
   const commandRegistry = useCommandRegistry();
   const terminalContainerRef = useRef(null);
   const previousPathRef = useRef(pathname);
+  const welcomeMessageDisplayedRef = useRef(false);
   const [dimensions, setDimensions] = useState({
     width: typeof window !== 'undefined' ? window.innerWidth : 0,
     height: typeof window !== 'undefined' ? window.innerHeight : 0,
@@ -47,17 +50,18 @@ const Terminal = () => {
 
   // Reset terminal when path changes
   useEffect(() => {
+    // Only reset if we've actually changed paths
     if (previousPathRef.current !== pathname) {
       // Path has changed, reset the terminal
       clearOutput();
-      setIsInitialized(false);
+      welcomeMessageDisplayedRef.current = false;
       previousPathRef.current = pathname;
     }
   }, [pathname, clearOutput]);
 
-  // Initialize commands
+  // Register commands once
   useEffect(() => {
-    if (!isInitialized) {
+    if (!isCommandsRegistered) {
       try {
         // Register all commands in a single batch
         commandRegistry.registerCommands({
@@ -66,24 +70,31 @@ const Terminal = () => {
           ...externalCommands,
           ...easterEggCommands,
         });
-
-        // Display welcome message
-        addOutput([
-          'Welcome to my terminal-themed portfolio!',
-          'Type "help" to see available commands.',
-          '',
-        ]);
-
-        setIsInitialized(true);
+        setIsCommandsRegistered(true);
       } catch (error) {
-        console.error('Error initializing terminal commands:', error);
-        addOutput([
-          'Error initializing terminal commands. Please refresh the page.',
-          `Error: ${error.message}`,
-        ]);
+        console.error('Error registering terminal commands:', error);
       }
     }
-  }, [isInitialized, commandRegistry, addOutput]);
+  }, [commandRegistry, isCommandsRegistered]);
+
+  // Handle welcome message separately from command registration
+  useEffect(() => {
+    // Only show the welcome message if it hasn't been shown yet for this path
+    if (
+      isCommandsRegistered &&
+      !welcomeMessageDisplayedRef.current &&
+      output.length === 0
+    ) {
+      welcomeMessageDisplayedRef.current = true;
+
+      // Display welcome message
+      addOutput([
+        'Welcome to my terminal-themed portfolio!',
+        'Type "help" to see available commands.',
+        '',
+      ]);
+    }
+  }, [isCommandsRegistered, addOutput, output.length]);
 
   // Initialize Zork game
   const { zorkState, startZork, processZorkCommand } = initializeZork({
