@@ -36,6 +36,7 @@ module.exports = {
         'text-typing': 'text-typing 3.5s steps(40, end)',
         'crt-flicker': 'crt-flicker 4s infinite ease-in-out',
         'crt-scan': 'crt-scan 8s linear infinite',
+        'lambda-bounce': 'lambda-bounce 5s ease-in-out infinite',
       },
       keyframes: {
         'cursor-blink': {
@@ -63,6 +64,32 @@ module.exports = {
         'crt-scan': {
           '0%': { transform: 'translateY(0)' },
           '100%': { transform: 'translateY(100vh)' },
+        },
+        'lambda-bounce': {
+          '0%, 100%': {
+            transform: 'translateY(0) rotate(0deg)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '10%': {
+            transform: 'translateY(-17%) rotate(5deg)',
+            animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+          '15%': {
+            transform: 'translateY(0) rotate(0deg)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '60%': {
+            transform: 'translateY(0) rotate(0deg)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '70%': {
+            transform: 'translateY(-17%) rotate(-5deg)',
+            animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+          '75%': {
+            transform: 'translateY(0) rotate(0deg)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+          },
         },
       },
       textShadow: {

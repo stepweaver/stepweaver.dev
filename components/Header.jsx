@@ -54,7 +54,9 @@ export default function Header() {
       {/* Path display in lambda format */}
       <div className='flex flex-col mb-4'>
         <p className='font-terminus text-terminal-green text-xl'>
-          <span className='font-hack mr-1'>λ</span>
+          <span className='font-hack mr-1 inline-block animate-lambda-bounce'>
+            λ
+          </span>
           <span>stepweaver{formatPath()}</span>
         </p>
       </div>

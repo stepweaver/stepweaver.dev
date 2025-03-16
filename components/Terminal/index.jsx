@@ -163,7 +163,9 @@ const Terminal = () => {
     <div className='terminal-window w-full' ref={terminalContainerRef}>
       <div className='terminal-header'>
         <div className='terminal-title'>
-          <span className='font-hack text-terminal-green'>λ</span>
+          <span className='font-hack text-terminal-green inline-block animate-lambda-bounce'>
+            λ
+          </span>
           <span className='text-terminal-green'>stepweaver</span>
           {getPathDisplay()}
         </div>
