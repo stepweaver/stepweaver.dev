@@ -48,6 +48,28 @@ const Terminal = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Apply cursor styles for browsers without good support
+  useEffect(() => {
+    // Polyfill for older browsers that don't support caret styling
+    const applyCaretStyle = () => {
+      const inputElement =
+        terminalContainerRef.current?.querySelector('.terminal-input');
+      if (inputElement) {
+        // Force re-render the caret by briefly setting a style then removing it
+        inputElement.style.caretColor = '#00ff00';
+
+        // Focus the input to make sure the cursor is visible
+        inputElement.focus();
+      }
+    };
+
+    // Apply immediately and then every time the window is focused
+    applyCaretStyle();
+    window.addEventListener('focus', applyCaretStyle);
+
+    return () => window.removeEventListener('focus', applyCaretStyle);
+  }, []);
+
   // Reset terminal when path changes
   useEffect(() => {
     // Only reset if we've actually changed paths

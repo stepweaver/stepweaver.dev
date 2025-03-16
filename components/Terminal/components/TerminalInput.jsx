@@ -77,7 +77,7 @@ export default function TerminalInput({
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
-        className='terminal-input bg-transparent border-none outline-none text-terminal-text w-full'
+        className='terminal-input bg-transparent border-none outline-none text-terminal-text w-full caret-terminal-green'
         aria-label='Terminal input'
         autoComplete='off'
         autoCapitalize='off'
@@ -85,7 +85,6 @@ export default function TerminalInput({
         spellCheck='false'
         autoFocus
       />
-      <span className='cursor-blink h-4 w-2 bg-terminal-green'></span>
     </div>
   );
 }
