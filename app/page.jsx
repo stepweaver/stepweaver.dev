@@ -1,14 +1,32 @@
-import Terminal from '@/components/Terminal';
+// Using a direct relative import instead of the alias
+// import Terminal from '../components/Terminal';
+import MinimalTerminal from '../components/MinimalTerminal';
 import LatestPost from '@/app/components/LatestPost';
 import TerminalWindow from '@/components/ui/TerminalWindow';
+
+// Temporary debug Terminal component
+const DebugTerminal = () => {
+  return (
+    <div className='terminal-window'>
+      <div className='terminal-header'>
+        <div className='terminal-title'>Debug Terminal</div>
+      </div>
+      <div className='terminal-body'>
+        <p>This is a debug terminal to test imports.</p>
+      </div>
+    </div>
+  );
+};
 
 export default function HomePage() {
   return (
     <div className='space-y-8'>
       {/* Hero Section */}
       <section>
-        {/* <Terminal /> */}
-        <div>Terminal temporarily disabled</div>
+        <div className='mb-4 p-2 bg-terminal-light rounded'>
+          Debug: Using MinimalTerminal component
+        </div>
+        <MinimalTerminal />
       </section>
 
       {/* About Section */}

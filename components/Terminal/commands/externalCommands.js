@@ -1,4 +1,3 @@
-
 'use client';
 
 import { COMMAND_CATEGORIES } from './commandRegistry';

@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -7,12 +6,13 @@ import { useTerminalOutput } from './hooks/useTerminalOutput';
 import { useCommandHistory } from './hooks/useCommandHistory';
 import { useCommandProcessor } from './hooks/useCommandProcessor';
 import { useCommandRegistry } from './commands/commandRegistry';
-import systemCommands from './commands/systemCommands';
-import navigationCommands from './commands/navigationCommands';
-import externalCommands from './commands/externalCommands';
-import easterEggCommands from './commands/easterEggCommands';
+import { systemCommands } from './commands/systemCommands';
+import { navigationCommands } from './commands/navigationCommands';
+import { externalCommands } from './commands/externalCommands';
+import { easterEggCommands } from './commands/easterEggCommands';
 import TerminalOutput from './components/TerminalOutput';
 import TerminalInput from './components/TerminalInput';
+import { initializeZork } from './games/Zork/index';
 import './styles/terminal.css';
 
 const Terminal = () => {
