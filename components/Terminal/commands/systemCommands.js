@@ -61,4 +61,37 @@ export const systemCommands = {
       return args.join(' ') || '';
     },
   },
+
+  whoami: {
+    description: 'Display the current user',
+    usage: 'whoami',
+    category: 'system',
+    execute: () => {
+      return 'user';
+    },
+  },
+
+  date: {
+    description: 'Display the current date and time',
+    usage: 'date',
+    category: 'system',
+    execute: () => {
+      return new Date().toString();
+    },
+  },
+
+  ls: {
+    description: 'List available sections',
+    usage: 'ls',
+    category: 'system',
+    execute: () => {
+      return [
+        'Available sections:',
+        'about/      - Learn more about me',
+        'projects/   - View my portfolio projects',
+        'blog/       - Read my latest articles',
+        'contact/    - Get in touch with me',
+      ];
+    },
+  },
 };

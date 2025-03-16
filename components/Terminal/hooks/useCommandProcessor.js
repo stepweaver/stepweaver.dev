@@ -47,7 +47,7 @@ export function useCommandProcessor({
       if (command) {
         try {
           // Execute command with context
-          const result = command.execute({
+          const context = {
             args,
             input,
             addOutput,
@@ -56,12 +56,33 @@ export function useCommandProcessor({
             getCommand,
             getCommandsByCategory,
             getAllVisibleCommands,
-          });
+          };
+
+          const result = command.execute(context);
 
           // Handle command output
           if (result !== null && result !== undefined) {
             if (Array.isArray(result)) {
               addOutput(result);
+            } else if (typeof result === 'object' && result.then) {
+              // Handle promises (async commands)
+              addOutput('!type Processing command...');
+              result
+                .then((asyncResult) => {
+                  if (asyncResult !== null && asyncResult !== undefined) {
+                    if (Array.isArray(asyncResult)) {
+                      addOutput(asyncResult);
+                    } else {
+                      addOutput(asyncResult.toString());
+                    }
+                  }
+                  addOutput('');
+                })
+                .catch((error) => {
+                  addOutput(`Error: ${error.message || 'Unknown error'}`);
+                  addOutput('');
+                });
+              return;
             } else {
               addOutput(result.toString());
             }

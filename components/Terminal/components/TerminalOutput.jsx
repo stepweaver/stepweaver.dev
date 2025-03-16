@@ -1,5 +1,6 @@
 import React from 'react';
 import TypedText from './TypedText';
+import LoadingDotsText from './LoadingDotsText';
 
 export default function TerminalOutput({ output }) {
   return (
@@ -20,6 +21,7 @@ export default function TerminalOutput({ output }) {
               // Parse special command prefixes
               const isCommand = textLine.startsWith('$ ');
               const isTypedAnimation = textLine.startsWith('!type ');
+              const isLoadingAnimation = textLine.startsWith('!loading ');
 
               if (isTypedAnimation) {
                 // Remove the !type prefix and display with typing animation
@@ -27,6 +29,16 @@ export default function TerminalOutput({ output }) {
                 return (
                   <div key={`${index}-${lineIndex}`} className='mb-1'>
                     <TypedText text={textToType} speed={40} />
+                  </div>
+                );
+              }
+
+              if (isLoadingAnimation) {
+                // Remove the !loading prefix and display with loading animation
+                const loadingText = textLine.substring(9) || 'Loading';
+                return (
+                  <div key={`${index}-${lineIndex}`} className='mb-1'>
+                    <LoadingDotsText text={loadingText} />
                   </div>
                 );
               }

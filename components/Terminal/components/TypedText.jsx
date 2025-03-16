@@ -5,6 +5,10 @@ export default function TypedText({ text, speed = 50, onComplete }) {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
+    // Reset state if text changes
+    setDisplayText('');
+    setIsComplete(false);
+
     let charIndex = 0;
     let typingTimer;
 

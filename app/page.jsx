@@ -1,6 +1,6 @@
 // Using a direct relative import instead of the alias
-// import Terminal from '../components/Terminal';
-import MinimalTerminal from '../components/MinimalTerminal';
+import Terminal from '../components/Terminal';
+// import MinimalTerminal from '../components/MinimalTerminal';
 import LatestPost from '@/app/components/LatestPost';
 import TerminalWindow from '@/components/ui/TerminalWindow';
 
@@ -24,9 +24,9 @@ export default function HomePage() {
       {/* Hero Section */}
       <section>
         <div className='mb-4 p-2 bg-terminal-light rounded'>
-          Debug: Using MinimalTerminal component
+          Using full Terminal component
         </div>
-        <MinimalTerminal />
+        <Terminal />
       </section>
 
       {/* About Section */}

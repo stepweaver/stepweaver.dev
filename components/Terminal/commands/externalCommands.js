@@ -2,51 +2,45 @@
 
 import { COMMAND_CATEGORIES } from './commandRegistry';
 
-const externalCommands = {
+export const externalCommands = {
   github: {
-    description: 'Open my GitHub profile in a new window',
+    description: 'Open my GitHub profile',
     usage: 'github',
     category: 'external',
-    execute: ({ addOutput }) => {
-      window.open(
-        'https://github.com/yourusername',
-        '_blank',
-        'noopener,noreferrer'
-      );
-
-      return 'Opening GitHub profile in a new window...';
+    execute: ({ router }) => {
+      // For client-side navigation we can use window.open
+      window.open('https://github.com/yourusername', '_blank');
+      return 'Opening GitHub profile...';
     },
   },
 
   linkedin: {
-    description: 'Open my LinkedIn profile in a new window',
+    description: 'Open my LinkedIn profile',
     usage: 'linkedin',
     category: 'external',
-    execute: ({ addOutput }) => {
-      window.open(
-        'https://linkedin.com/in/yourusername',
-        '_blank',
-        'noopener,noreferrer'
-      );
-
-      return 'Opening LinkedIn profile in a new window...';
+    execute: ({ router }) => {
+      window.open('https://linkedin.com/in/yourusername', '_blank');
+      return 'Opening LinkedIn profile...';
     },
   },
 
-  twitter: {
-    description: 'Open my Twitter profile in a new window',
-    usage: 'twitter',
+  email: {
+    description: 'Send me an email',
+    usage: 'email',
     category: 'external',
-    execute: ({ addOutput }) => {
-      window.open(
-        'https://twitter.com/yourusername',
-        '_blank',
-        'noopener,noreferrer'
-      );
+    execute: ({ router }) => {
+      window.open('mailto:your.email@example.com', '_blank');
+      return 'Opening email client...';
+    },
+  },
 
-      return 'Opening Twitter profile in a new window...';
+  resume: {
+    description: 'View my resume',
+    usage: 'resume',
+    category: 'external',
+    execute: ({ router }) => {
+      window.open('/resume.pdf', '_blank');
+      return 'Opening resume...';
     },
   },
 };
-
-export default externalCommands;

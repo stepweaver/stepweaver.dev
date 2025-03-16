@@ -1,6 +1,6 @@
 'use client';
 
-const easterEggCommands = {
+export const easterEggCommands = {
   fun: {
     description: 'Find hidden terminal features',
     usage: 'fun',
@@ -23,36 +23,56 @@ const easterEggCommands = {
   matrix: {
     description: 'Enter the Matrix',
     usage: 'matrix',
-    category: 'easter-egg',
+    category: 'fun',
     hidden: true,
     execute: ({ addOutput }) => {
-      // Add Matrix animation effect (would be implemented in CSS)
-      document.body.classList.add('matrix-effect');
+      addOutput('!type Initiating Matrix sequence...');
 
-      // Remove the effect after 10 seconds
+      // Simulate Matrix code rain effect
       setTimeout(() => {
-        document.body.classList.remove('matrix-effect');
-      }, 10000);
+        addOutput([
+          '01001000 01100101 01101100 01101100 01101111',
+          '01010111 01101111 01110010 01101100 01100100',
+          '!type Wake up, Neo...',
+          'The Matrix has you...',
+          '',
+        ]);
+      }, 1000);
 
-      return [
-        'Entering the Matrix...',
-        'Wake up, Neo...',
-        'Follow the white rabbit.',
-        'The Matrix has you...',
-      ];
+      return null;
+    },
+  },
+
+  konami: {
+    description: 'Konami code easter egg',
+    usage: 'konami',
+    category: 'fun',
+    hidden: true,
+    execute: ({ addOutput }) => {
+      addOutput([
+        '!type ↑↑↓↓←→←→BA',
+        'Cheat mode activated!',
+        '30 extra lives granted.',
+      ]);
+      return null;
     },
   },
 
   coffee: {
-    description: 'Make coffee',
+    description: 'Get some coffee',
     usage: 'coffee',
-    category: 'easter-egg',
+    category: 'fun',
     hidden: true,
     execute: () => {
       return [
-        'Brewing coffee...',
-        '☕ Coffee ready!',
-        'Error: Coffee not implemented in this browser.',
+        '      )))  ',
+        '     (((   ',
+        '   +-----+ ',
+        '   |     | ',
+        '   |     | ',
+        '   +-----+ ',
+        '',
+        "Here's your coffee! ☕",
       ];
     },
   },
@@ -73,5 +93,3 @@ const easterEggCommands = {
     },
   },
 };
-
-export default easterEggCommands;

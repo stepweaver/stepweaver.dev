@@ -1,38 +1,64 @@
 export const navigationCommands = {
-  ls: {
-    description: 'List available sections',
-    usage: 'ls',
+  goto: {
+    description: 'Navigate to a page in the portfolio',
+    usage: 'goto [page]',
     category: 'navigation',
-    execute: () => {
-      return [
-        'Available sections:',
-        'about/      - Learn more about me',
-        'projects/   - View my portfolio projects',
-        'blog/       - Read my latest articles',
-        'contact/    - Get in touch with me',
-        'resume/     - View my professional resume',
-      ];
+    execute: ({ args, router, addOutput }) => {
+      if (args.length === 0) {
+        return 'Please specify a page to navigate to. Available pages: home, about, projects, blog, contact';
+      }
+
+      const destination = args[0].toLowerCase();
+      const validDestinations = {
+        home: '/',
+        about: '/about',
+        projects: '/projects',
+        blog: '/blog',
+        contact: '/contact',
+      };
+
+      if (validDestinations[destination]) {
+        addOutput(`Navigating to ${destination}...`);
+        setTimeout(() => {
+          router.push(validDestinations[destination]);
+        }, 500);
+        return null;
+      } else {
+        return `Page not found: ${destination}. Available pages: home, about, projects, blog, contact`;
+      }
     },
   },
 
   cd: {
-    description: 'Navigate to a section',
-    usage: 'cd [section]',
+    description: 'Change directory (navigate to page)',
+    usage: 'cd [directory]',
     category: 'navigation',
-    execute: ({ args, router }) => {
+    execute: ({ args, router, addOutput }) => {
       if (args.length === 0 || args[0] === '~' || args[0] === '/') {
-        router.push('/');
-        return 'Navigating to home...';
+        addOutput('Navigating to home...');
+        setTimeout(() => {
+          router.push('/');
+        }, 500);
+        return null;
       }
 
-      const path = args[0].replace(/^\/+|\/+$/g, '');
-      const validPaths = ['about', 'projects', 'blog', 'contact', 'resume'];
+      const destination = args[0].toLowerCase();
+      const validDestinations = {
+        about: '/about',
+        projects: '/projects',
+        blog: '/blog',
+        contact: '/contact',
+        '..': '/',
+      };
 
-      if (validPaths.includes(path)) {
-        router.push(`/${path}`);
-        return `Navigating to ${path}...`;
+      if (validDestinations[destination]) {
+        addOutput(`Changing directory to ${destination}...`);
+        setTimeout(() => {
+          router.push(validDestinations[destination]);
+        }, 500);
+        return null;
       } else {
-        return `cd: ${path}: No such section`;
+        return `Directory not found: ${destination}`;
       }
     },
   },
