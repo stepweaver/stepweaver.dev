@@ -1,6 +1,10 @@
 import TerminalWindow from '@/components/ui/TerminalWindow';
 import { getProjects } from '@/lib/projects';
 
+export const metadata = {
+  title: 'Projects',
+};
+
 export default async function ProjectsPage() {
   const projects = await getProjects();
 

@@ -3,7 +3,7 @@ import LatestPost from '@/app/components/LatestPost';
 import TerminalWindow from '@/components/ui/TerminalWindow';
 
 export const metadata = {
-  title: 'Home',
+  title: 'Stephen Weaver',
 };
 
 export default function HomePage() {
