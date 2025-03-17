@@ -1,6 +1,6 @@
-import Terminal from '../components/Terminal';
 import LatestPost from '@/components/LatestPost';
 import TerminalWindow from '@/components/ui/TerminalWindow';
+import ClientTerminal from '@/components/ClientTerminal';
 
 export const metadata = {
   title: 'Stephen Weaver',
@@ -11,7 +11,7 @@ export default function HomePage() {
     <div className='space-y-8'>
       {/* Hero Section with Terminal - prominently featured at the top */}
       <section className='mt-4'>
-        <Terminal />
+        <ClientTerminal />
       </section>
 
       {/* Welcome Section */}
