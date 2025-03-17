@@ -12,10 +12,9 @@ export default async function ProjectsPage() {
     <div className='space-y-8'>
       <TerminalWindow title='~/projects'>
         <div className='space-y-6'>
-          <h1 className='text-2xl text-terminal-green font-terminus'>
-            Projects
-          </h1>
-
+          <p className='text-xl text-terminal-muted font-terminus'>
+            Here are some of the projects I've worked on.
+          </p>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
             {projects.map((project) => (
               <div

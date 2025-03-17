@@ -46,9 +46,10 @@ export default function ContactPage() {
     <div className='space-y-8'>
       <TerminalWindow title='~/contact'>
         <div className='space-y-6'>
-          <h1 className='text-2xl text-terminal-green font-terminus'>
-            Contact Me
-          </h1>
+          <p className='text-xl text-terminal-muted font-terminus'>
+            Drop me a line, say hi, or ask me a question. I'll get back to you
+            as soon as possible.
+          </p>
 
           <form onSubmit={handleSubmit} className='space-y-4'>
             <div>
