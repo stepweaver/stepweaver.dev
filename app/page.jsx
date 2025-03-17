@@ -8,14 +8,14 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <div>
-      {/* Hero Section with Terminal */}
-      <section>
+    <div className='space-y-8'>
+      {/* Hero Section with Terminal - prominently featured at the top */}
+      <section className='mt-4'>
         <Terminal />
       </section>
 
       {/* Welcome Section */}
-      <section className='mt-8'>
+      <section>
         <TerminalWindow title='~/welcome'>
           <div className='space-y-4'>
             <h2 className='text-xl text-terminal-green font-terminus'>
@@ -35,7 +35,7 @@ export default function HomePage() {
       </section>
 
       {/* Latest Blog Posts */}
-      <section className='mt-8'>
+      <section>
         <LatestPost />
       </section>
     </div>
