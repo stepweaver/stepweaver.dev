@@ -11,8 +11,13 @@ export default function MobileNav() {
   const navItems = [
     { name: 'home', path: '/' },
     { name: 'about', path: '/about' },
-    { name: 'projects', path: '/projects' },
     { name: 'blog', path: '/blog' },
+    {
+      name: 'bluesky',
+      path: 'https://bsky.app/profile/stepweaver.dev',
+      external: true,
+    },
+    { name: 'github', path: 'https://github.com/stepweaver', external: true },
     { name: 'contact', path: '/contact' },
   ];
 
@@ -50,14 +55,16 @@ export default function MobileNav() {
                   <Link
                     href={item.path}
                     onClick={() => setIsOpen(false)}
+                    target={item.external ? '_blank' : ''}
+                    rel={item.external ? 'noopener noreferrer' : ''}
                     className={
-                      pathname === item.path
+                      pathname === item.path && !item.external
                         ? 'text-terminal-green'
                         : 'text-terminal-text'
                     }
                   >
                     <span className='text-terminal-green mr-2'>
-                      {pathname === item.path ? '>' : ''}
+                      {pathname === item.path && !item.external ? '>' : ''}
                     </span>
                     {item.name}
                   </Link>

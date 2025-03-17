@@ -15,7 +15,6 @@ export const navigationCommands = {
       const destination = args[0].toLowerCase();
       const validDestinations = {
         about: '/about',
-        projects: '/projects',
         blog: '/blog',
         contact: '/contact',
         '..': '/',

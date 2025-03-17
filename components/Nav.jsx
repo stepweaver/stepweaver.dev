@@ -29,8 +29,13 @@ export default function Nav() {
   const navItems = [
     { name: 'home', path: '/' },
     { name: 'about', path: '/about' },
-    { name: 'projects', path: '/projects' },
     { name: 'blog', path: '/blog' },
+    {
+      name: 'bluesky',
+      path: 'https://bsky.app/profile/stepweaver.dev',
+      external: true,
+    },
+    { name: 'github', path: 'https://github.com/stepweaver', external: true },
     { name: 'contact', path: '/contact' },
   ];
 
@@ -47,13 +52,17 @@ export default function Nav() {
           <Link
             key={item.path}
             href={item.path}
+            target={item.external ? '_blank' : ''}
+            rel={item.external ? 'noopener noreferrer' : ''}
             className={`flex items-center text-lg ${
-              pathname === item.path
+              pathname === item.path && !item.external
                 ? 'text-terminal-green'
                 : 'text-terminal-text hover:text-terminal-green'
             }`}
           >
-            <span className='mr-1'>{pathname === item.path ? '>' : ''}</span>
+            <span className='mr-1'>
+              {pathname === item.path && !item.external ? '>' : ''}
+            </span>
             {item.name}
           </Link>
         ))}

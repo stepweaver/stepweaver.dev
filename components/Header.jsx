@@ -20,8 +20,6 @@ export default function Header() {
     switch (pathname) {
       case '/about':
         return 'Full Stack Developer';
-      case '/projects':
-        return 'Software Engineer';
       case '/blog':
         return 'Tech Writer';
       case '/contact':
@@ -38,8 +36,6 @@ export default function Header() {
         return '[Web Developer] in South Bend';
       case '/about':
         return '[About Me]';
-      case '/projects':
-        return "[Things I've Built]";
       case '/blog':
         return "[Things I've Written]";
       case '/contact':

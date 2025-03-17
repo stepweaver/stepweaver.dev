@@ -1,53 +1,44 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
+
+export const COMMAND_CATEGORIES = {
+  SYSTEM: 'system',
+  NAVIGATION: 'navigation',
+  EXTERNAL: 'external',
+  FUN: 'fun',
+  EASTER_EGG: 'easter-egg',
+};
 
 export function useCommandRegistry() {
-  const [commands, setCommands] = useState({});
+  const commands = useRef({});
 
-  const registerCommand = useCallback((name, options) => {
-    if (!name) return;
+  const registerCommand = (name, command) => {
+    commands.current[name] = {
+      ...command,
+      name,
+    };
+  };
 
-    setCommands((prev) => ({
-      ...prev,
-      [name]: {
-        name,
-        description: options.description || 'No description available',
-        usage: options.usage || name,
-        category: options.category || 'misc',
-        hidden: options.hidden || false,
-        execute:
-          options.execute || (() => `Command '${name}' is not implemented`),
-      },
-    }));
-  }, []);
+  const registerCommands = (commandsObj) => {
+    Object.entries(commandsObj).forEach(([name, command]) => {
+      registerCommand(name, command);
+    });
+  };
 
-  const registerCommands = useCallback(
-    (commandsObj) => {
-      Object.entries(commandsObj).forEach(([name, options]) => {
-        registerCommand(name, options);
-      });
-    },
-    [registerCommand]
-  );
+  const getCommand = (name) => {
+    return commands.current[name];
+  };
 
-  const getCommand = useCallback(
-    (name) => {
-      return commands[name] || null;
-    },
-    [commands]
-  );
+  const getCommandsByCategory = (category) => {
+    return Object.values(commands.current).filter(
+      (cmd) => cmd.category === category
+    );
+  };
 
-  const getCommandsByCategory = useCallback(
-    (category) => {
-      return Object.values(commands).filter(
-        (cmd) => cmd.category === category && !cmd.hidden
-      );
-    },
-    [commands]
-  );
-
-  const getAllVisibleCommands = useCallback(() => {
-    return Object.values(commands).filter((cmd) => !cmd.hidden);
-  }, [commands]);
+  const getAllVisibleCommands = () => {
+    return Object.values(commands.current).filter(
+      (cmd) => !cmd.hidden || cmd.category === 'fun'
+    );
+  };
 
   return {
     registerCommand,

@@ -46,7 +46,15 @@ export default function TerminalOutput({ output }) {
               return (
                 <div
                   key={`${index}-${lineIndex}`}
-                  className={`mb-1 ${isCommand ? 'text-terminal-green' : ''}`}
+                  className={`mb-1 whitespace-pre font-['Hack',_'Courier_New',_monospace] ${
+                    isCommand ? 'text-terminal-green' : ''
+                  }`}
+                  style={{
+                    fontVariantLigatures: 'none',
+                    letterSpacing: '0',
+                    fontFeatureSettings: '"mono" 1',
+                    lineHeight: '1.2',
+                  }}
                 >
                   {textLine}
                 </div>
