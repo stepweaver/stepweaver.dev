@@ -20,7 +20,7 @@ export default function MobileNav() {
     <div className='md:hidden z-50'>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className='p-2 text-terminal-green'
+        className='p-3 text-2xl text-terminal-green'
         aria-expanded={isOpen}
         aria-label='Toggle navigation menu'
       >

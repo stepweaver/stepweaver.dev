@@ -40,14 +40,14 @@ export default function Nav() {
         scrolled
           ? 'bg-terminal-background/70 backdrop-blur-md border-b border-terminal-border/30 shadow-md'
           : ''
-      }`}
+      } hidden md:block`}
     >
       <div className='flex items-center justify-center space-x-8'>
         {navItems.map((item) => (
           <Link
             key={item.path}
             href={item.path}
-            className={`flex items-center text-xl ${
+            className={`flex items-center text-lg ${
               pathname === item.path
                 ? 'text-terminal-green'
                 : 'text-terminal-text hover:text-terminal-green'

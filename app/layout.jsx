@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
           <Nav />
 
           {/* Mobile navigation */}
-          <div className='absolute top-4 right-4 md:hidden'>
+          <div className='absolute top-4 right-4'>
             <MobileNav />
           </div>
 
