@@ -50,8 +50,8 @@ export default function ContactPage() {
             Get in Touch
           </h2>
           <p className='text-terminal-text'>
-            Drop me a line, say hi, or ask me a question. I'll get back to you
-            as soon as possible.
+            Let's connect! Whether you have a question, a project in mind, or
+            just want to say hi, I'm all ears.
           </p>
 
           <form onSubmit={handleSubmit} className='space-y-4'>
