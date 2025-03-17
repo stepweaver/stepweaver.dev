@@ -20,7 +20,7 @@ export default function AboutPage() {
           </p>
 
           <p className='text-terminal-text mb-6'>
-            I also have experience automating workflows with Python, streamlining repetitive tasks to improve efficiency. I believe in continuous growth and collaboration, always striving to create solutions that are as efficient as they are impactful.
+            I believe in continuous growth and collaboration, always striving to create solutions that are as efficient as they are impactful.
           </p>
         </div>
       </TerminalWindow>
