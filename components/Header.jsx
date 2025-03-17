@@ -76,7 +76,7 @@ export default function Header() {
               <div className='text-terminal-green text-5xl'>SW</div>
             ) : (
               <Image
-                src='/images/profile.jpg'
+                src='/images/optimized/profile.webp'
                 alt='Stephen Weaver'
                 width={300}
                 height={300}
