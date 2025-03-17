@@ -7,28 +7,37 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="space-y-8">
+    <div className='space-y-8'>
       {/* Bio Section */}
-      <TerminalWindow title="~/about">
-        <div>
-          <p className='text-terminal-text mb-6'>
-            I'm a problem-solver, builder, and relentless learner with a passion for web development and modern JavaScript frameworks. I don't just code—I engineer, refine, and optimize.
+      <TerminalWindow title='~/about'>
+        <div className='space-y-4'>
+          <h2 className='text-xl text-terminal-green font-terminus'>
+            About Me
+          </h2>
+          <p className='text-terminal-text'>
+            I'm a problem-solver, builder, and relentless learner with a passion
+            for web development and modern JavaScript frameworks. I don't just
+            code—I engineer, refine, and optimize.
           </p>
 
-          <p className='text-terminal-text mb-6'>
-            Whether I'm building full-stack applications, exploring DevOps automation, or pushing the boundaries of what's possible with new technologies, I thrive on learning, adapting, and solving complex problems.
+          <p className='text-terminal-text'>
+            Whether I'm building full-stack applications, exploring DevOps
+            automation, or pushing the boundaries of what's possible with new
+            technologies, I thrive on learning, adapting, and solving complex
+            problems.
           </p>
 
-          <p className='text-terminal-text mb-6'>
-            I believe in continuous growth and collaboration, always striving to create solutions that are as efficient as they are impactful.
+          <p className='text-terminal-text'>
+            I believe in continuous growth and collaboration, always striving to
+            create solutions that are as efficient as they are impactful.
           </p>
         </div>
       </TerminalWindow>
 
       {/* Skills Section */}
-      <TerminalWindow title="~/skills">
-        <div>
-          <h2 className='text-terminal-green font-terminus mb-4'>Skills</h2>
+      <TerminalWindow title='~/skills'>
+        <div className='space-y-4'>
+          <h2 className='text-xl text-terminal-green font-terminus'>Skills</h2>
 
           <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
             <div className='p-3 bg-terminal-light rounded'>
@@ -65,10 +74,12 @@ export default function AboutPage() {
       </TerminalWindow>
 
       {/* Contact Section */}
-      <TerminalWindow title="~/contact">
+      <TerminalWindow title='~/contact'>
         <div>
           <p className='text-terminal-text mb-6'>
-            I'm always open to discussing new projects, creative ideas, or collaboration opportunities. If you have a vision, let's build something great together.
+            I'm always open to discussing new projects, creative ideas, or
+            collaboration opportunities. If you have a vision, let's build
+            something great together.
           </p>
           <Link
             href='/contact'

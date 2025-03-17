@@ -36,12 +36,12 @@ export default async function BlogPostPage({ params }) {
   return (
     <div className='space-y-8'>
       <TerminalWindow title={`~/blog/${params.slug}`}>
-        <article className='prose prose-invert max-w-none'>
-          <h1 className='text-2xl text-terminal-green font-terminus mb-4'>
+        <article className='space-y-4'>
+          <h1 className='text-xl text-terminal-green font-terminus'>
             {post.title}
           </h1>
 
-          <div className='flex flex-wrap items-center gap-4 text-terminal-muted mb-8'>
+          <div className='flex flex-wrap items-center gap-4 text-terminal-muted mb-4'>
             <time dateTime={post.date}>
               {new Date(post.date).toLocaleDateString()}
             </time>

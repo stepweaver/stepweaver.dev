@@ -45,8 +45,11 @@ export default function ContactPage() {
   return (
     <div className='space-y-8'>
       <TerminalWindow title='~/contact'>
-        <div className='space-y-6'>
-          <p className='text-xl text-terminal-muted font-terminus'>
+        <div className='space-y-4'>
+          <h2 className='text-xl text-terminal-green font-terminus'>
+            Get in Touch
+          </h2>
+          <p className='text-terminal-text'>
             Drop me a line, say hi, or ask me a question. I'll get back to you
             as soon as possible.
           </p>
