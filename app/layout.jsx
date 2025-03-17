@@ -6,7 +6,6 @@ import Header from '@/components/Header';
 import Nav from '@/components/Nav';
 import MobileNav from '@/components/MobileNav';
 import Footer from '@/components/Footer';
-import CrtEffect from '@/components/CrtEffect';
 
 const terminus = localFont({
   src: './fonts/TerminusTTFWindows-4.49.3.ttf',
@@ -38,11 +37,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body
-        className={`${terminus.variable} ${hack.variable} antialiased w-full min-h-screen flex flex-col bg-terminal crt-effect`}
+        className={`${terminus.variable} ${hack.variable} antialiased w-full min-h-screen flex flex-col bg-terminal`}
       >
-        {/* CRT effect overlay */}
-        <CrtEffect />
-
         <div className='mx-auto w-full max-w-4xl px-4 md:px-6 flex flex-col min-h-screen'>
           {/* Header with profile and title */}
           <Header />

@@ -1,0 +1,50 @@
+---
+title: 'Essential Terminal Tips for Developers'
+date: '2023-03-15'
+tags: ['terminal', 'linux', 'productivity']
+excerpt: 'Boost your productivity with these essential terminal tricks'
+---
+
+# Essential Terminal Tips for Developers
+
+As developers, we spend a significant amount of time in the terminal. Here are some tips to make you more productive.
+
+## Keyboard Shortcuts
+
+- `Ctrl + A`: Move cursor to beginning of line
+- `Ctrl + E`: Move cursor to end of line
+- `Ctrl + K`: Delete from cursor to end of line
+- `Ctrl + U`: Delete from cursor to beginning of line
+- `Ctrl + W`: Delete the word behind the cursor
+- `Ctrl + R`: Search command history
+
+## Useful Commands
+
+Here are some commands I use daily:
+
+```bash
+# Find files by name
+find . -name "pattern"
+
+# Search for text in files
+grep -r "search term" .
+
+# View file content with pagination
+less filename
+
+# Monitor file changes
+tail -f logfile
+```
+
+## Setting Up Aliases
+
+Add these to your `.bashrc` or `.zshrc`:
+
+```bash
+alias ll='ls -la'
+alias gs='git status'
+alias gp='git push'
+alias gl='git pull'
+```
+
+What are your favorite terminal tricks? Let me know in the comments!

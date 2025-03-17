@@ -1,0 +1,90 @@
+---
+title: 'Understanding React Hooks'
+date: '2023-04-01'
+tags: ['react', 'javascript', 'hooks']
+excerpt: "A deep dive into React's hooks system and how to use it effectively"
+---
+
+# Understanding React Hooks
+
+React Hooks have revolutionized how we write React components. Let's explore how to use them effectively.
+
+## Why Hooks?
+
+Hooks solve several problems in React:
+
+- Share stateful logic between components
+- Split complex components into smaller functions
+- Use state without classes
+
+## Common Hooks
+
+### useState
+
+```jsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+```
+
+### useEffect
+
+```jsx
+function DocumentTitle({ title }) {
+  useEffect(() => {
+    document.title = title;
+
+    // Cleanup function
+    return () => {
+      document.title = 'Default Title';
+    };
+  }, [title]); // Only re-run if title changes
+
+  return <div>Title changed to: {title}</div>;
+}
+```
+
+### useContext
+
+```jsx
+const ThemeContext = React.createContext('light');
+
+function ThemedButton() {
+  const theme = useContext(ThemeContext);
+
+  return <button className={theme}>Themed Button</button>;
+}
+```
+
+## Custom Hooks
+
+Creating custom hooks lets you extract component logic into reusable functions:
+
+```jsx
+function useWindowSize() {
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return size;
+}
+```
+
+Hooks are a game-changer for React development. What's your experience with them?

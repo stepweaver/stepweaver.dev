@@ -33,6 +33,36 @@ const Terminal = () => {
     height: typeof window !== 'undefined' ? window.innerHeight : 0,
   });
 
+  // Register commands and initialize welcome message - do this first and separately
+  useEffect(() => {
+    if (!isInitializedRef.current) {
+      isInitializedRef.current = true;
+
+      try {
+        // Register all commands in a single batch
+        commandRegistry.registerCommands({
+          ...systemCommands,
+          ...navigationCommands,
+          ...externalCommands,
+          ...easterEggCommands,
+        });
+        setIsCommandsRegistered(true);
+
+        // Display the help message immediately after commands are registered
+        if (!welcomeMessageDisplayedRef.current) {
+          welcomeMessageDisplayedRef.current = true;
+          addOutput([
+            '!type Type "help" for a list of available commands.',
+            '',
+          ]);
+        }
+      } catch (error) {
+        console.error('Error registering terminal commands:', error);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty dependency array ensures this runs once on mount
+
   // Detect window resize for responsiveness
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -80,39 +110,6 @@ const Terminal = () => {
       previousPathRef.current = pathname;
     }
   }, [pathname, clearOutput]);
-
-  // Register commands once
-  useEffect(() => {
-    if (!isCommandsRegistered) {
-      try {
-        // Register all commands in a single batch
-        commandRegistry.registerCommands({
-          ...systemCommands,
-          ...navigationCommands,
-          ...externalCommands,
-          ...easterEggCommands,
-        });
-        setIsCommandsRegistered(true);
-      } catch (error) {
-        console.error('Error registering terminal commands:', error);
-      }
-    }
-  }, [commandRegistry, isCommandsRegistered]);
-
-  // Handle welcome message separately from command registration
-  useEffect(() => {
-    // Only show the welcome message if it hasn't been shown yet for this path
-    if (
-      isCommandsRegistered &&
-      !welcomeMessageDisplayedRef.current &&
-      output.length === 0
-    ) {
-      welcomeMessageDisplayedRef.current = true;
-
-      // Display a simple prompt instead of the welcome message
-      addOutput(['Type "help" for a list of available commands.', '']);
-    }
-  }, [isCommandsRegistered, addOutput, output.length]);
 
   // Initialize Zork game
   const { zorkState, startZork, processZorkCommand } = initializeZork({

@@ -1,5 +1,5 @@
 import Terminal from '../components/Terminal';
-import LatestPost from '@/app/components/LatestPost';
+import LatestPost from '@/components/LatestPost';
 import TerminalWindow from '@/components/ui/TerminalWindow';
 
 export const metadata = {
@@ -15,7 +15,7 @@ export default function HomePage() {
       </section>
 
       {/* Welcome Section */}
-      <section>
+      <section className='mt-8'>
         <TerminalWindow title='~/welcome'>
           <div className='space-y-4'>
             <h2 className='text-xl text-terminal-green font-terminus'>
@@ -34,8 +34,8 @@ export default function HomePage() {
         </TerminalWindow>
       </section>
 
-      {/* Latest Blog Post */}
-      <section>
+      {/* Latest Blog Posts */}
+      <section className='mt-8'>
         <LatestPost />
       </section>
     </div>

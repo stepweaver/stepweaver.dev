@@ -127,4 +127,10 @@
   .sticky-nav {
     @apply sticky top-0 z-50;
   }
+
+  /* Glow effect for cards and elements */
+  .shadow-glow {
+    box-shadow: 0 4px 20px -5px rgba(0, 255, 65, 0.2),
+      0 8px 16px -6px rgba(0, 255, 65, 0.1);
+  }
 }
